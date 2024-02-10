@@ -68,39 +68,39 @@ function UserProfile() {
                 display="flex"
                 flexDirection="column"
               >
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>User ID:</strong> {user.id}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Name:</strong> {user.firstName} {user.lastName}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Username:</strong> @{user.username}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Email:</strong> {user.email}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Phone Number:</strong> {user.contactNumber}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Address 1:</strong> {user.address1}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Address 2:</strong> {user.address2}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <strong>Referral Code:</strong> {user.referralCode}
                 </Typography>
 
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                <Typography variant="h4" style={{ marginBottom: "10px", color: 'brown' }}>
                   <Link to={`/editUserDetails/${user.id}`}>
                     Edit details
                   </Link>

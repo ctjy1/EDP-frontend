@@ -23,41 +23,30 @@ function ChangePassword() {
         .required("Confirm New Password is required"),
     }),
     onSubmit: (values) => {
-      // Retrieve token from storage
       const token = localStorage.getItem('token');
-      if (typeof token === 'string' && token.trim()) {
-        try {
-          // Decode token to get user information
-          const decoded = jwtDecode(token);
-          // If you need userId or any other user data, ensure it's included in your token and use it here
-          // Example: const userId = decoded.userId;
-
-          // Make API call to change password
-          http.post("/User/change-password", values)
-            .then(response => {
-              toast.success("Password changed successfully");
-            })
-            .catch(error => {
-              if (error.response) {
-                console.error("Error Response:", error.response);
-                toast.error(`Error: ${error.response.status} - ${error.response.statusText}`);
-              } else if (error.request) {
-                console.error("Error Request:", error.request);
-                toast.error("No response from server");
-              } else {
-                console.error("Error Message:", error.message);
-                toast.error("Error in request setup");
-              }
-            });
-        } catch (error) {
-          console.error("Error decoding token:", error);
-          toast.error("Invalid token. Please log in again.");
-        }
-      } else {
-        console.error("Token not found or invalid.");
+    
+      // Check if token is present
+      if (!token) {
+        console.error("Token not found.");
         toast.error("You must be logged in to change your password.");
+        return; // Exit the function early
+      }
+    
+      try {
+        // Assuming you are using a correct jwtDecode function
+        // Note: Common mistake is not having the correct import or usage
+        // It should be something like: import jwtDecode from 'jwt-decode';
+        const decoded = jwtDecode(token);
+        
+        // Proceed with your password change logic here
+        // Make sure to include user ID in your API call if needed
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        toast.error("Invalid token. Please log in again.");
       }
     },
+    
+    
   });
 
   return (

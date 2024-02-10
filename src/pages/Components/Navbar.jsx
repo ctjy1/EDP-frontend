@@ -19,6 +19,7 @@ import { useState, useEffect } from "react";
 import { CssBaseline } from "@mui/material";
 import UserContext from "../../contexts/UserContext";
 import * as jwtDecodeModule from "jwt-decode";
+import RedirectHandler from '../../RedirectHandler';
 
 
 const Navbar = () => {

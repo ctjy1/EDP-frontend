@@ -27,7 +27,7 @@ function AdminHome() {
  
   return (
     <Box>
-      <Typography variant="h1" sx={{ my: 4, textAlign: "center" }}>
+      <Typography variant="h1" sx={{ my: 4, textAlign: "center", color: '#000'}}>
         <strong>Admin Home</strong>
       </Typography>
 

@@ -1,78 +1,64 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import { Container, Toolbar, Typography, Box, Button } from "@mui/material";
+import React, { useState, useEffect, useContext } from 'react';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { ColorModeContext, useMode } from "./themes/MyTheme";
+  Container,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  AppBar,
+  CssBaseline,
+  ThemeProvider
+} from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { ColorModeContext, useMode } from './themes/MyTheme';
+import UserContext from './contexts/UserContext';
+import * as jwtDecodeModule from 'jwt-decode';
 
-//Accounts
-import Gallery from "./pages/Accounts/Gallery";
-import AddGallery from "./pages/Accounts/AddGallery";
-import EditPost from "./pages/Accounts/EditPost";
-import EditUserDetails from "./pages/Accounts/EditUserdetails";
-import ChangePassword from "./pages/Accounts/ChangePassword";
-import UserReferralTracking from "./pages/Accounts/UserReferralTracking";
-import UserProfile from "./pages/Accounts/UserProfile";
-import ManageReferralTracking from "./pages/Accounts/ManageReferralTracking";
-import ManageUsers from "./pages/Accounts/ManageUsers";
-import Register from "./pages/Accounts/Register";
-import Login from "./pages/Accounts/Login";
-import ForgetPassword from "./pages/Accounts/ForgetPassword";
-import ResetPassword from "./pages/Accounts/ResetPassword";
-import ReferralPage from "./pages/Accounts/ReferralPage";
-import http from "././http";
-import Chatbot from "./pages/Components/Chatbot";
-import UserContext from "./contexts/UserContext";
-import * as jwtDecodeModule from "jwt-decode";
+// Import pages
+import Gallery from './pages/Accounts/Gallery';
+import AddGallery from './pages/Accounts/AddGallery';
+import EditPost from './pages/Accounts/EditPost';
+import EditUserDetails from './pages/Accounts/EditUserdetails';
+import ChangePassword from './pages/Accounts/ChangePassword';
+import UserReferralTracking from './pages/Accounts/UserReferralTracking';
+import UserProfile from './pages/Accounts/UserProfile';
+import ManageReferralTracking from './pages/Accounts/ManageReferralTracking';
+import ManageUsers from './pages/Accounts/ManageUsers';
+import Register from './pages/Accounts/Register';
+import Login from './pages/Accounts/Login';
+import ForgetPassword from './pages/Accounts/ForgetPassword';
+import ResetPassword from './pages/Accounts/ResetPassword';
+import ReferralPage from './pages/Accounts/ReferralPage';
+import AdminHome from './pages/AdminHome';
+import UserHome from './pages/UserHome';
+import Chatbot from './pages/Components/Chatbot';
 
-import AdminHome from "./pages/AdminHome";
-import UserHome from "./pages/UserHome";
-import AppBar from "./pages/Components/AdminAppBar"; // Adjust the path as needed
+// Assuming RedirectHandler is properly defined in './RedirectHandler'
+import RedirectHandler from './RedirectHandler';
+import LogoutButton from './LogoutButton';
 
 function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const decoded = jwtDecodeModule.jwtDecode(token);
-        setUserRole(decoded["UserRole"]);
-        if (decoded["UserRole"] === "superAdmin") {
-          navigate("/adminHome"); // using React Router's navigate function
-        }
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-  }, [user]); // You might need to adjust the dependency array
-
-  console.log("UserRole:", userRole); // Debugging: Check userRole value
-
   const logout = () => {
     localStorage.clear();
-    window.location.reload();
+    navigate('/'); // Navigating to home page after logout
   };
 
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
       <Router>
+        <RedirectHandler setUser={setUser} setUserRole={setUserRole} /> {/* Ensure RedirectHandler is used correctly */}
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <AppBar position="static" className="AppBar">
               <Container>
                 <Toolbar disableGutters={true}>
-                  <Link
+                <Link
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
@@ -117,7 +103,7 @@ function App() {
                       </Link>
                     </>
                   )}
-                  {userRole === "accountAdmin"  && (
+                  {userRole === "Account Manager" && (
                     <>
                       <Link
                         to="/manageReferralTracking"
@@ -195,13 +181,10 @@ function App() {
                           <strong>@{user.username}</strong>
                         </Typography>
                       </Link>
-                      <Button onClick={logout} color="inherit">
-                        Logout
-                      </Button>
+                      <LogoutButton />
                     </>
                   ) : (
                     <>
-                    
                       <Link
                         to="/register"
                         style={{
@@ -229,7 +212,7 @@ function App() {
             </AppBar>
             <Container>
               <Routes>
-                <Route path={"/"} element={<UserHome />} />
+              <Route path={"/"} element={<UserHome />} />
                 <Route path={"/gallery"} element={<Gallery />} />
                 <Route path={"/addgallery"} element={<AddGallery />} />
                 <Route path={"/editpost/:id"} element={<EditPost />} />
@@ -237,7 +220,7 @@ function App() {
                   path={"/editUserDetails/:id"}
                   element={<EditUserDetails />}
                 />
-                <Route path={"/changePassword"} element={<ChangePassword />} />
+                <Route path="/changePassword" element={<ChangePassword />} />
                 <Route path={"/forgetPassword"} element={<ForgetPassword />} />
                 <Route path={"/resetPassword"} element={<ResetPassword />} />
                 <Route
