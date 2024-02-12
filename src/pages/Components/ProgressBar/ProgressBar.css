@@ -1,0 +1,49 @@
+/* .progress-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+} */
+/* 
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #4cceac; 
+} */
+
+/* .progress-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; 
+    font-size: 14px; 
+    font-weight: bold;
+} */
+
+.progress-container {
+    width: 100%;
+    height: 30px; /* Adjust height as needed */
+    background-color: white; /* Set background color of the progress container to white */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    margin-top: 10px; /* Adjust margin top as needed */
+    position: relative; /* Set position to relative */
+}
+
+.progress-bar {
+    background: linear-gradient(to left, #FF5722, #FFC107); /* Change the gradient colors */
+    height: 100%;
+    width: 100%;
+    border-radius: 5px; /* Add border radius for rounded corners */
+}
+
+.progress-label {
+    position: absolute; /* Position the label absolutely within the container */
+    top: 50%; /* Place the label vertically in the middle */
+    left: 50%; /* Place the label horizontally in the middle */
+    transform: translate(-50%, -50%); /* Center the label both vertically and horizontally */
+    color: white; /* Text color of the label */
+    font-size: 14px; /* Font size of the label */
+    font-weight: bold; /* Optionally, add font weight to make the label bold */
+}

@@ -21,6 +21,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import UserContext from '../../contexts/UserContext';
 import Navbar from '../Components/Navbar';
 import { ColorModeContext, useMode } from '../../themes/MyTheme';
+import CustomProgressBar from '../Components/ProgressBar/CustomProgressBar';
 
 function ViewRewards() {
     const [rewardList, setRewardList] = useState([]);
@@ -41,29 +42,13 @@ function ViewRewards() {
 
     const getRewards = () => {
         http.get('/reward').then((res) => {
-            console.log("this is the user's points", user.points);
+            console.log("USER'S POINTS", user.points);
             const rewards = res.data;
 
             const unredeemedRewards = rewards.filter((reward) => reward.redeemedAt === null);
 
             setRewardList(unredeemedRewards);
         });
-    };
-
-    const Progress = ({done, total}) => {
-        const widthPercentage = (done / total) * 100;
-    
-        const style = {
-            width: `${widthPercentage}%`
-        };
-    
-        return (
-            <div className="progress" style={{ width: '100%', height: '100%' }}>
-                <div className="progress-done" style={style}>
-                    {done}/{total} points
-                </div>
-            </div>
-        );
     };
 
     const getRedeemedRewards = () => {
@@ -370,7 +355,7 @@ function ViewRewards() {
                                     </Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', alignItems: 'center', height: '30px', marginTop: '10px' }}>
-                                    <Progress done={100} total={100} />
+                                    <CustomProgressBar done={user.points} total={group.rewards[0].pointsRequired} />
                                 </Box>
                             </CardContent>
                         </Card>
