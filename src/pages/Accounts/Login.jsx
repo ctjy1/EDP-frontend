@@ -56,8 +56,7 @@ function Login() {
         marginTop: 8,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "#fdcda9",
+        alignItems: "center"
       }}
     >
      <Typography
