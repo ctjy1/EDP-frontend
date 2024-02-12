@@ -60,6 +60,7 @@ const Navbar = () => {
     if (token) {
       try {
         const decoded = jwtDecodeModule.jwtDecode(token);
+        console.log(setUser(decoded));
         setUserRole(decoded["UserRole"]);
         if (decoded["UserRole"] === "Super Adminstrator") {
           navigate("/adminHome"); // Navigate to adminHome
@@ -70,9 +71,9 @@ const Navbar = () => {
     }
   }, [userRole, navigate]); // Adjust the dependency array
 
-  console.log("UserRole:", userRole);
+  console.log("UserRole:", user?.UserRole);
   
-  console.log("Username:", user?.username);
+  console.log("Username:", user?.name);
 
 
   const logout = () => {
@@ -94,19 +95,19 @@ const Navbar = () => {
            <Link to="/">Activities</Link>
            <Link to="/Gallery">Gallery</Link>
            <Link to="/">Contact</Link>
-   <Link to="/userProfile">@{user?.username}</Link>
+   <Link to="/userProfile">@{user?.name}</Link>
     <button onClick={logout}>Logout</button>
-
-   
   </>
 )}
-{user && (
+
+{/* this was the problematic code!! */}
+{/* {user && (
 <>
 <Typography>{user.name}</Typography>
 <Button>Logout</Button>
 </>
 )
-}
+} */}
         {userRole == "Super Adminstrator" && (
           <>
            <Link to="/manageReferralTracking">Manage Referral Tracking</Link>
