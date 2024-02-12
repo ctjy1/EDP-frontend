@@ -15,7 +15,7 @@ import { ColorModeContext, useMode } from './themes/MyTheme';
 import UserContext from './contexts/UserContext';
 import * as jwtDecodeModule from 'jwt-decode';
 
-// Import pages
+// Import Account pages
 import Gallery from './pages/Accounts/Gallery';
 import AddGallery from './pages/Accounts/AddGallery';
 import EditPost from './pages/Accounts/EditPost';
@@ -33,6 +33,16 @@ import ReferralPage from './pages/Accounts/ReferralPage';
 import AdminHome from './pages/AdminHome';
 import UserHome from './pages/UserHome';
 import Chatbot from './pages/Components/Chatbot';
+
+// Import Reward pages
+import Rewards from './pages/Rewards/Rewards';
+import AddReward from './pages/Rewards/AddReward';
+import EditReward from './pages/Rewards/EditReward';
+import MoreRewards from './pages/Rewards/MoreRewards';
+import ManageRewards from './pages/Rewards/ManageRewards';
+import ManageMoreRewards from './pages/Rewards/ManageMoreRewards';
+
+import ViewReward from './pages/Rewards/ViewReward';
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from './RedirectHandler';
@@ -239,6 +249,14 @@ function App() {
                 <Route path={"/adminHome"} element={<AdminHome />} />
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
+
+                <Route path={"/manageRewards"} element={<ManageRewards/>} />
+                <Route path={"/manageMoreRewards/:id"} element={<ManageMoreRewards/>} />
+                <Route path={"/rewards"} element={<Rewards />} />
+                <Route path={"/addreward"} element={<AddReward />} />
+                <Route path={"/editreward/:id"} element={<EditReward />} />
+                <Route path={"/morerewards/:id"} element={<MoreRewards />}/>
+                <Route path={"/viewreward"} element={<ViewReward />} />
               </Routes>
             </Container>
           </ThemeProvider>
