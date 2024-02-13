@@ -67,9 +67,13 @@ body,
     body {
       background-color: #f6f6f6;
     }
-    
+    .homeNavbar{
+    display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 90px;
+    }
     nav {
-      display: flex;
       align-items: center;
       justify-content: space-between;
       min-height: 90px;

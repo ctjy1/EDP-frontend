@@ -19,7 +19,7 @@ import * as jwtDecodeModule from 'jwt-decode';
 import Gallery from './pages/Accounts/Gallery';
 import AddGallery from './pages/Accounts/AddGallery';
 import EditPost from './pages/Accounts/EditPost';
-import EditUserDetails from './pages/Accounts/EditUserdetails';
+import EditUserDetails from './pages/Accounts/EditUserDetails';
 import ChangePassword from './pages/Accounts/ChangePassword';
 import UserReferralTracking from './pages/Accounts/UserReferralTracking';
 import UserProfile from './pages/Accounts/UserProfile';
@@ -219,7 +219,7 @@ function App() {
                 <Route
                   path={"/editUserDetails/:id"}
                   element={<EditUserDetails />}
-                />
+                /> 
                 <Route path="/changePassword" element={<ChangePassword />} />
                 <Route path={"/forgetPassword"} element={<ForgetPassword />} />
                 <Route path={"/resetPassword"} element={<ResetPassword />} />
