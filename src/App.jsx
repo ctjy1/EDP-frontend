@@ -9,8 +9,6 @@ import {
   MenuItem,
   AppBar,
   CssBaseline,
-
-=======
   ThemeProvider,
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
