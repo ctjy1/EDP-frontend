@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -10,7 +10,7 @@ import UserContext from "../../contexts/UserContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const formik = useFormik({
     initialValues: {
@@ -52,14 +52,20 @@ function Login() {
     },
   });
 
+  // Log user object when it changes
+  useEffect(() => {
+    console.log('User Object:', user);
+  }, [user]);
+
   return (
     <>
+
     <Box
       sx={{
         marginTop: 3,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       }}
     >
      <Typography

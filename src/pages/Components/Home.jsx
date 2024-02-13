@@ -6,6 +6,7 @@ import { FiArrowRight } from "react-icons/fi";
 const Home = () => {
   return (
     <div className="home-container">
+
       <div className="home-banner-container">
        
         <div className="home-text-section">

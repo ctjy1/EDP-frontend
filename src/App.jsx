@@ -9,6 +9,8 @@ import {
   MenuItem,
   AppBar,
   CssBaseline,
+
+=======
   ThemeProvider,
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -40,6 +42,32 @@ import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
 
+
+// Bookings pages
+import Carts from './pages/Bookings/Carts';
+import AddCart from './pages/Bookings/AddCart';
+import EditCart from './pages/Bookings/EditCart';
+import Checkout from './pages/Bookings/Checkout';
+import CheckoutSuccess from './pages/Bookings/CheckoutSuccess';
+import Orders from './pages/Bookings/Orders';
+import UserOrders from './pages/Bookings/UserOrders';
+import SetBudget from './pages/Bookings/SetBudget';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BookingChart from './pages/Bookings/BookingChart';
+
+// Import Reward pages
+import Rewards from './pages/Rewards/Rewards';
+import AddReward from './pages/Rewards/AddReward';
+import EditReward from './pages/Rewards/EditReward';
+import MoreRewards from './pages/Rewards/MoreRewards';
+import ManageRewards from './pages/Rewards/ManageRewards';
+import ManageMoreRewards from './pages/Rewards/ManageMoreRewards';
+import ManageDeletedRewards from './pages/Rewards/ManageDeletedRewards';
+import ManageExpiredRewards from './pages/Rewards/ManageExpiredRewards';
+
+import ViewReward from './pages/Rewards/ViewReward';
+
+
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
 import http from "./http";
@@ -50,6 +78,14 @@ function App() {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      http.get('/user/auth').then((res) => {
+        setUser(res.data.user);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -92,6 +128,7 @@ function App() {
     }
   };
 
+
   const appBarStyle = {
     backgroundColor: getColorForRole(userRole), // Set background color based on user role
   };
@@ -112,7 +149,7 @@ function App() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
       <Router>
@@ -121,6 +158,7 @@ function App() {
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+
             <AppBar
               position="static"
               className="AppBar"
@@ -128,12 +166,14 @@ function App() {
               elevation={0}
               sx={{ paddingTop: "10px" }}
             >
+
               <Container>
                 <Toolbar disableGutters={true}>
                   <Link
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
+
                    <Typography variant="h3" component="div" sx={{color: 'orangered'}}>
     <img src={Logo} alt="" style={{ width: '85px', height: '28px' }} />
 </Typography>
@@ -387,6 +427,37 @@ function App() {
                 <Route path={"/adminHome"} element={<AdminHome />} />
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
+
+
+
+                {/* Carts Routes for user side*/}
+                <Route path={"/addcart"} element={<AddCart />} />
+                <Route path={"/editcart/:id"} element={<EditCart />} />
+                <Route path={"/checkout"} element={<Checkout />} />
+                <Route path={"/checkoutsuccess"} element={<CheckoutSuccess />} />
+                <Route path={"/userorders"} element={<UserOrders />} />
+                <Route path={"/setbudget"} element={<SetBudget />} />
+                
+
+
+                {/* Carts Routes for admin side */}
+                <Route path={"/carts"} element={<Carts />} />
+                <Route path={"/orders"} element={<Orders />} />
+                <Route path={"/bookingchart"} element={<BookingChart />} />
+
+
+
+                <Route path={"/manageRewards"} element={<ManageRewards/>} />
+                <Route path={"/manageMoreRewards/:id"} element={<ManageMoreRewards/>} />
+                <Route path={"/manageDeletedRewards"} element={<ManageDeletedRewards/>}/>
+                <Route path={"/manageExpiredRewards"} element={<ManageExpiredRewards/>}/>
+                <Route path={"/rewards"} element={<Rewards />} />
+                <Route path={"/addreward"} element={<AddReward />} />
+                <Route path={"/editreward/:id"} element={<EditReward />} />
+                <Route path={"/morerewards/:id"} element={<MoreRewards />}/>
+
+                <Route path={"/viewreward"} element={<ViewReward />} />
+
               </Routes>
               <Chatbot />
             </Container>
