@@ -39,8 +39,13 @@ function Login() {
         .then((res) => {
           localStorage.setItem("accessToken", res.data.accessToken);
           setUser(res.data.user);
-          navigate("/");
-        })
+          const userRole = res.data.user.userRole;
+      if (userRole === 'Super Administrator' || userRole === 'Account Manager' || userRole === "Bookings Manager" || userRole === "Rewards Manager" || userRole === "Feedback Manager") {
+        navigate("/adminHome");
+      } else if (userRole === 'user') {
+        navigate("/");
+      }
+    })
         .catch(function (err) {
           toast.error(`${err.response.data.message}`);
         });

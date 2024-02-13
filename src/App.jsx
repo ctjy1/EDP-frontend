@@ -5,16 +5,19 @@ import {
   Typography,
   Box,
   Button,
+  Menu,
+  MenuItem,
   AppBar,
   CssBaseline,
   ThemeProvider,
 } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { ExpandMore } from '@mui/icons-material';
 import { ColorModeContext, useMode } from "./themes/MyTheme";
 import UserContext from "./contexts/UserContext";
 import * as jwtDecodeModule from "jwt-decode";
-import Logo from "./assets/Logo.png";
+import Logo from "./assets/logo_uplay.png";
 
 // Accounts
 import Gallery from "./pages/Accounts/Gallery";
@@ -32,6 +35,7 @@ import Login from "./pages/Accounts/Login";
 import ForgetPassword from "./pages/Accounts/ForgetPassword";
 import ResetPassword from "./pages/Accounts/ResetPassword";
 import ReferralPage from "./pages/Accounts/ReferralPage";
+import Calendar from "./pages/Accounts/Calendar";
 import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
@@ -45,6 +49,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -99,6 +104,14 @@ function App() {
     justifyContent: "center", // Center the links horizontally
     alignItems: 'center'
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
@@ -121,10 +134,12 @@ function App() {
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    <Typography variant="h3" component="div" sx={{color: 'orangered'}}>
-                    <img src={Logo} alt="" />
-                    </Typography>
+                   <Typography variant="h3" component="div" sx={{color: 'orangered'}}>
+    <img src={Logo} alt="" style={{ width: '85px', height: '28px' }} />
+</Typography>
+
                   </Link>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', flexGrow: 1 }}>
                   {userRole === "user" && (
                     <>
                       <Link
@@ -154,6 +169,38 @@ function App() {
                       >
                         <Typography>Cart</Typography>
                       </Link>
+                      <Link
+                        to="#"
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <Typography style={{ marginRight: '4px' }}>Support</Typography>
+                        <ExpandMore />
+                      </Link>
+                      <Menu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/feedbackForm" >
+                            <Typography color="white">Add Feedback</Typography>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/surveyForm">
+                            <Typography color="white">Add Survey</Typography>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/ticketForm">
+                            <Typography color="white">Add Ticket</Typography>
+                          </Link>
+                        </MenuItem>
+                      </Menu>
                     </>
                   )}
                   {userRole === "Account Manager" && (
@@ -176,6 +223,68 @@ function App() {
                         style={linkStyle}
                       >
                         <Typography>Manage Referral Tracking</Typography>
+                      </Link>
+                    </>
+                  )}
+                  {userRole === "Bookings Manager" && (
+                    <>
+                      
+                      <Link
+                        to="/manageUsers"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Carts</Typography>
+                      </Link>
+                      <Link
+                        to="/manageAdmin"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Orders</Typography>
+                      </Link>
+                    </>
+                  )}
+                  {userRole === "Feedback Manager" && (
+                    <>
+                      
+                      <Link
+                        to="/manageUsers"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Feedbacks</Typography>
+                      </Link>
+                      <Link
+                        to="/manageAdmin"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Surveys</Typography>
+                      </Link>
+                      <Link
+                        to="/manageReferralTracking"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Tickets</Typography>
+                      </Link>
+                    </>
+                  )}
+                  {userRole === "Rewards Manager" && (
+                    <>
+                      
+                      <Link
+                        to="/manageUsers"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Rewards</Typography>
+                      </Link>
+                    </>
+                  )}
+                  {userRole === "Activity Manager" && (
+                    <>
+                      
+                      <Link
+                        to="/manageUsers"
+                        style={linkStyle}
+                      >
+                        <Typography>Manage Actvities</Typography>
                       </Link>
                     </>
                   )}
@@ -214,6 +323,7 @@ function App() {
                       
                     </>
                   )}
+                  </Box>
 
                   <Box sx={{ flexGrow: 1 }}></Box>
                   {user ? (
@@ -271,6 +381,7 @@ function App() {
                   path={"/manageReferralTracking"}
                   element={<ManageReferralTracking />}
                 />
+                <Route path={"/calendar"} element={<Calendar />} />
                 <Route path={"/register"} element={<Register />} />
                 <Route path={"/login"} element={<Login />} />
                 <Route path={"/adminHome"} element={<AdminHome />} />

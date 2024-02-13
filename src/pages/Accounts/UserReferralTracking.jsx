@@ -74,9 +74,10 @@ function UserReferralTracking() {{
     };*/
 
   const columns = [
-    { field: 'id', headerName: 'Referral Tracking ID', width: 150 },
-    { field: 'referredUsername', headerName: 'Referred Username', width: 250 },
-      { field: 'dateFulfilled', headerName: 'Date Fufilled', width: 250 },
+    { field: 'id', headerName: 'Referral Tracking ID', width: 130 },
+    { field: 'referredUsername', headerName: 'Referred Username', width: 180 },
+      { field: 'dateFulfilled', headerName: 'Date Fufilled', width: 180 },
+      { field: 'points', headerName: 'Points Earned', width: 180 },
       {
           field: 'status',
           headerName: 'Status',
@@ -106,21 +107,6 @@ function UserReferralTracking() {{
                       statusStyle.border = '2px solid #0288d1';
                       statusIcon = <InfoIcon sx={{ mr: 1 }} />;
                       break;
-                  case 'Late':
-                      statusStyle.color = '#e74c3c';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <WarningIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Past':
-                      statusStyle.color = '#95a5a6';
-                      statusStyle.border = '2px solid #ccc';
-                      statusIcon = <AssignmentTurnedInIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Cancelled': // Add this case
-                      statusStyle.color = '#f44336';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <CancelIcon sx={{ mr: 1 }} />;
-                      break;
                   default:
                       break;
               }
@@ -144,6 +130,7 @@ function UserReferralTracking() {{
         month: '2-digit',
         day: '2-digit',
       }).replace(/\//g, '-') || 'N/A', 
+      points: '100',
     status: referralTracking.status
 }));
 
@@ -179,7 +166,7 @@ console.log("Rows:", rows); // Log the generated rows to the console
                   </Box>
 
                   <Box
-                      height='40vh'
+                      height='50vh'
                       m='40px 0 0 0'
                       mb='200px'
                       sx={{
