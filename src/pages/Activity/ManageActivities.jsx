@@ -87,7 +87,7 @@ function ManageActivitys() {{
       { field: 'tagId', headerName: 'Tag ID', width: 90 }, 
       { field: 'tagName', headerName: 'Tag Name', width: 110 }, // Using tag_Name from the model
       { field: 'activityDesc', headerName: 'Activity Description', width: 150 }, // Using activity_Desc from the model
-      // { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
+      { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
       // Add more columns if needed
       {
         field: 'manage',
@@ -134,7 +134,7 @@ const rows = ActivityList.map((activity, i) => ({
   tagId: activity.tag_Id,
   tagName: activity.tag_Name,
   activityDesc: activity.activity_Desc,
-  // imageFile: activity.ImageFile,
+  imageFile: activity.ImageFile,
   }));
 
   const [pageSize, setPageSize] = useState(5)
@@ -249,10 +249,10 @@ const rows = ActivityList.map((activity, i) => ({
                 <Typography>
                     <strong>Activity Description:</strong> {activity.activity_Desc}
                 </Typography>
-{/* 
+
                 <Typography>
                     <strong>Image File:</strong> {activity.ImageFile}
-                </Typography> */}
+                </Typography>
             </Box>
         )}
     </DialogContent>

@@ -29,7 +29,7 @@ function AddActivity() {
       tag_Name: "",
       activity_Desc: "",
       activity_price: 0,
-    //   ImageFile: null,
+      ImageFile: null,
     },
     validationSchema: yup.object({
       // Your validation schema
@@ -42,13 +42,13 @@ function AddActivity() {
       data.tag_Name = data.tag_Name.trim();
       data.activity_price = data.activity_price;
       data.activity_Desc = data.activity_Desc;
-    //   data.ImageFile = data.ImageFile;
+      data.ImageFile = data.ImageFile;
 
       console.log(data);
 
       http.post("/Activity", data, {
         headers: {
-            "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data",
         },
         })
         .then((res) => {
@@ -234,12 +234,12 @@ function AddActivity() {
                         />
                     </Grid>
                             
-                    {/* <Grid item xs={12}>
+                    <Grid item xs={12}>
                         <input
                             type="file"
                             onChange={(event) => formik.setFieldValue("ImageFile", event.target.files[0])}
                         />
-                    </Grid> */}
+                    </Grid>
 
                     </Grid>
 
