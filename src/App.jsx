@@ -4,11 +4,14 @@ import {
   Toolbar,
   Typography,
   Box,
+  Menu,
+  MenuItem,
   Button,
   AppBar,
   CssBaseline,
   ThemeProvider,
 } from "@mui/material";
+import { ExpandMore } from '@mui/icons-material';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ColorModeContext, useMode } from "./themes/MyTheme";
@@ -43,7 +46,7 @@ import Tickets from './pages/Tickets';
 import AddFeedback from './pages/AddFeedback';
 import AddSurvey from './pages/AddSurvey';
 import AddTicket from './pages/AddTicket';
-import FAQPage  from './pages/FAQ';
+import FAQPage from './pages/FAQ';
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
@@ -108,7 +111,7 @@ function App() {
     justifyContent: "center", // Center the links horizontally
     alignItems: 'center'
   };
-  
+
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
       <Router>
@@ -130,8 +133,8 @@ function App() {
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    <Typography variant="h3" component="div" sx={{color: 'orangered'}}>
-                    <img src={Logo} alt="" />
+                    <Typography variant="h3" component="div" sx={{ color: 'orangered' }}>
+                      <img src={Logo} alt="" />
                     </Typography>
                   </Link>
                   {userRole === "user" && (
@@ -163,11 +166,51 @@ function App() {
                       >
                         <Typography>Cart</Typography>
                       </Link>
+                      <Link to="/FAQ" style={linkStyle}
+                      >
+                        <Typography>FAQ</Typography>
+                      </Link>
+
+                      <Link
+                        to="#"
+                        aria-controls="menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <Typography style={{ marginRight: '4px' }}>Support</Typography>
+                        <ExpandMore />
+                      </Link>
+                      <Menu
+                        id="menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/feedbackForm">
+                            <Typography>Add Feedback</Typography>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/surveyForm">
+                            <Typography>Add Survey</Typography>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/ticketForm">
+                            <Typography>Add Ticket</Typography>
+                          </Link>
+                        </MenuItem>
+                      </Menu>
+
+
+
                     </>
                   )}
                   {userRole === "Account Manager" && (
                     <>
-                      
+
                       <Link
                         to="/manageUsers"
                         style={linkStyle}
@@ -220,7 +263,7 @@ function App() {
                       >
                         <Typography>Rewards</Typography>
                       </Link>
-                      
+
                     </>
                   )}
 
@@ -285,6 +328,15 @@ function App() {
                 <Route path={"/adminHome"} element={<AdminHome />} />
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
+
+                <Route path={"/"} element={<Home />} />
+                <Route path={"/feedback"} element={<Feedback />} />
+                <Route path={"/surveys"} element={<Surveys />} />
+                <Route path={"/ticket"} element={<Tickets />} />
+                <Route path={"/feedbackForm"} element={<AddFeedback />} />
+                <Route path={"/FAQ"} element={<FAQPage />} />
+                <Route path={"/surveyForm"} element={<AddSurvey />} />
+                <Route path={"/ticketForm"} element={<AddTicket />} />
               </Routes>
               <Chatbot />
             </Container>
