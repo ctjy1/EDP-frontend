@@ -16,7 +16,7 @@ import UserContext from './contexts/UserContext';
 import * as jwtDecodeModule from 'jwt-decode';
 import Logo from "./assets/Logo.png";
 
-// Import pages
+// Import Account pages
 import Gallery from './pages/Accounts/Gallery';
 import AddGallery from './pages/Accounts/AddGallery';
 import EditPost from './pages/Accounts/EditPost';
@@ -35,7 +35,6 @@ import AdminHome from './pages/AdminHome';
 import UserHome from './pages/UserHome';
 import Chatbot from './pages/Components/Chatbot';
 
-
 // Bookings pages
 import Carts from './pages/Bookings/Carts';
 import AddCart from './pages/Bookings/AddCart';
@@ -46,6 +45,19 @@ import Orders from './pages/Bookings/Orders';
 import UserOrders from './pages/Bookings/UserOrders';
 import SetBudget from './pages/Bookings/SetBudget';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+// Import Reward pages
+import Rewards from './pages/Rewards/Rewards';
+import AddReward from './pages/Rewards/AddReward';
+import EditReward from './pages/Rewards/EditReward';
+import MoreRewards from './pages/Rewards/MoreRewards';
+import ManageRewards from './pages/Rewards/ManageRewards';
+import ManageMoreRewards from './pages/Rewards/ManageMoreRewards';
+import ManageDeletedRewards from './pages/Rewards/ManageDeletedRewards';
+import ManageExpiredRewards from './pages/Rewards/ManageExpiredRewards';
+
+import ViewReward from './pages/Rewards/ViewReward';
+
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from './RedirectHandler';
@@ -266,6 +278,7 @@ function App() {
                 <Route path={"/chatbot"} element={<Chatbot />} />
 
 
+
                 {/* Carts Routes for user side*/}
                 <Route path={"/addcart"} element={<AddCart />} />
                 <Route path={"/editcart/:id"} element={<EditCart />} />
@@ -280,6 +293,16 @@ function App() {
                 <Route path={"/orders"} element={<Orders />} />
 
 
+                <Route path={"/manageRewards"} element={<ManageRewards/>} />
+                <Route path={"/manageMoreRewards/:id"} element={<ManageMoreRewards/>} />
+                <Route path={"/manageDeletedRewards"} element={<ManageDeletedRewards/>}/>
+                <Route path={"/manageExpiredRewards"} element={<ManageExpiredRewards/>}/>
+                <Route path={"/rewards"} element={<Rewards />} />
+                <Route path={"/addreward"} element={<AddReward />} />
+                <Route path={"/editreward/:id"} element={<EditReward />} />
+                <Route path={"/morerewards/:id"} element={<MoreRewards />}/>
+
+                <Route path={"/viewreward"} element={<ViewReward />} />
 
               </Routes>
             </Container>
