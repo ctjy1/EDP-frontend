@@ -36,6 +36,15 @@ import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
 
+//Feedback and Survey
+import Feedback from './pages/Feedback';
+import Surveys from './pages/Surveys';
+import Tickets from './pages/Tickets';
+import AddFeedback from './pages/AddFeedback';
+import AddSurvey from './pages/AddSurvey';
+import AddTicket from './pages/AddTicket';
+import FAQPage  from './pages/FAQ';
+
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
 import http from "./http";
