@@ -18,7 +18,6 @@ import * as yup from "yup";
 import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NavBar from "../Components/Navbar"
 
 function Register() {
   const navigate = useNavigate();
@@ -133,10 +132,9 @@ function Register() {
 
   return (
     <>
-    <NavBar />
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 3,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

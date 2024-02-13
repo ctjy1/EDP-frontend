@@ -50,19 +50,19 @@ body,
 }
 
 .AppBar a {
-  color: inherit;
+  color: black;
   text-decoration: none;
   margin-right: 16px;
   }
   .AppBar a:hover {
-  color: lightblue;
+  color: red;
   }
   .AppBar button {
     color: inherit;
     margin-left: 12px;
     }
     .AppBar button:hover {
-    color: lightblue;
+    color: black;
     }
     body {
       background-color: #f6f6f6;
@@ -499,7 +499,7 @@ body,
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 75vh;
+      min-height: 80vh;
     }
     .wrapper{
       width: 100%;

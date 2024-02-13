@@ -7,12 +7,14 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
+import DoneIcon from '@mui/icons-material/CheckCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Header from "../../components/Header";
 import UserContext from "../../contexts/UserContext";
 import http from "../../http";
 import AccountSidebar from "./global/AccountSidebar";
+
 
 
 function ReferralTracking() {{
@@ -23,6 +25,7 @@ function ReferralTracking() {{
   const [selectedUser, setSelectedUser] = useState(null); // New state for popup user details
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedUserForDeletion, setSelectedUserForDeletion] = useState(null);
+  const [selectedReferralStatus, setSelectedReferralStatus] = useState("");
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -92,6 +95,23 @@ function ReferralTracking() {{
         }
       };
 
+      const saveReferralStatus = () => {
+        // Assuming the server expects a simple JSON with { status: "NewStatus" }
+        const updatedReferral = { status: selectedReferralStatus };
+        
+        http.put(`/ReferralTracking/UpdateReferralStatus/${selectedUser.id}`, updatedReferral)
+          .then((res) => {
+            console.log(res.data);
+            getReferrals(); // Fetch updated list
+            handleClosePopup(); // Close dialog
+          })
+          .catch(error => {
+            console.error('There was an error updating the referral status:', error.response ? error.response.data : error.message);
+          });
+    };
+    
+
+
   const columns = [
       { field: 'id', headerName: 'Referral ID', width: 100, cellClassName: 'name-column--cell' },
       { field: 'referredUsername', headerName: 'Referred Username', width: 120 },
@@ -125,21 +145,6 @@ function ReferralTracking() {{
                       statusStyle.color = '#3498db';
                       statusStyle.border = '2px solid #0288d1';
                       statusIcon = <InfoIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Late':
-                      statusStyle.color = '#e74c3c';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <WarningIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Past':
-                      statusStyle.color = '#95a5a6';
-                      statusStyle.border = '2px solid #ccc';
-                      statusIcon = <AssignmentTurnedInIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Cancelled': // Add this case
-                      statusStyle.color = '#f44336';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <CancelIcon sx={{ mr: 1 }} />;
                       break;
                   default:
                       break;
@@ -295,6 +300,21 @@ console.log("Rows:", rows); // Log the generated rows to the console
                 <Typography><strong>Reffered Username:</strong> @{selectedUser.referringUsername}</Typography>
                 <Typography><strong>Date Fufilled:</strong> {selectedUser.dateFulfilled}</Typography>
                 <Typography><strong>Status:</strong> {selectedUser.status}</Typography>
+                <FormControl fullWidth margin="normal">
+                                <InputLabel>Status</InputLabel>
+                                <Select
+                                    value={selectedReferralStatus}
+                                    onChange={(event) => setSelectedReferralStatus(event.target.value)}
+                                >
+                                    <MenuItem value="Pending">Pending</MenuItem>
+                                    <MenuItem value="Approved">Approved</MenuItem>
+                                    <MenuItem value="Not approved">Not Approved</MenuItem>
+                                    
+                                </Select>
+                                <Button variant="contained" color="primary" onClick={saveReferralStatus} sx={{ mt: 2 }}>
+                                    Save
+                                </Button>
+                            </FormControl>
                 
             </Box>
         )}

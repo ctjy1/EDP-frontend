@@ -7,7 +7,6 @@ import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../contexts/UserContext";
-import NavBar from "../Components/Navbar"
 
 function Login() {
   const navigate = useNavigate();
@@ -50,10 +49,9 @@ function Login() {
 
   return (
     <>
-    <NavBar />
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 3,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

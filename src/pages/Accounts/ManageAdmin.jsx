@@ -243,12 +243,14 @@ const rows = userList.map((user, i) => ({
                 <Typography><strong>Username:</strong> @{selectedUser.username}</Typography>
                 <Typography><strong>Email:</strong> {selectedUser.email}</Typography>
                 <Typography><strong>Phone Number:</strong> {selectedUser.contactNumber}</Typography>
-                <Typography><strong>User Role:</strong> {selectedUser.userRole}</Typography>
+                <Typography><strong>User Role:</strong> <strong>{selectedUser.userRole}</strong></Typography>
               
                
             </Box>
         )}
     </DialogContent>
+
+    
     <DialogActions sx={{ padding: '20px' }}>
         <Button variant="contained" onClick={handleClosePopup}>Close</Button>
     </DialogActions>

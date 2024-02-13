@@ -22,7 +22,6 @@ import http from "../../http";
 import dayjs from "dayjs";
 import UserContext from "../../contexts/UserContext";
 import global from "../../global";
-import NavBar from "../Components/Navbar"
 
 function Gallery() {
   const [galleryList, setGalleryList] = useState([]);
@@ -66,7 +65,6 @@ function Gallery() {
 
   return (
     <>
-      <NavBar />
     <Box>
       <Typography variant="h1" sx={{ my: 4, textAlign: "center", color: 'red', paddingBottom: "7px",}}>
         <strong>Community Post</strong>

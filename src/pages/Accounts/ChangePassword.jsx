@@ -2,10 +2,11 @@ import React from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UserSidebar from "./global/UserSidebar";
 import http from "../../http"; // Assuming http is your configured Axios instance
 import { ToastContainer, toast } from "react-toastify";
 // Corrected import statement for jwt-decode
-import {jwtDecode} from 'jwt-decode';
+import * as jwtDecodeModule from 'jwt-decode';
 
 function ChangePassword() {
   // Formik initialization
@@ -23,9 +24,8 @@ function ChangePassword() {
         .required("Confirm New Password is required"),
     }),
     onSubmit: (values) => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accessToken');
     
-      // Check if token is present
       if (!token) {
         console.error("Token not found.");
         toast.error("You must be logged in to change your password.");
@@ -33,24 +33,42 @@ function ChangePassword() {
       }
     
       try {
-        // Assuming you are using a correct jwtDecode function
-        // Note: Common mistake is not having the correct import or usage
-        // It should be something like: import jwtDecode from 'jwt-decode';
-        const decoded = jwtDecode(token);
-        
-        // Proceed with your password change logic here
-        // Make sure to include user ID in your API call if needed
+        const decoded = jwtDecodeModule(token);
+
+        const userId = decoded.sub; // Assuming 'sub' contains the user ID
+    
+        // Prepare the payload
+        const payload = {
+          OldPassword: values.oldPassword,
+          NewPassword: values.newPassword,
+          ConfirmNewPassword: values.confirmNewPassword,
+        };
+    
+        // Make the HTTP request
+        http.post(`/change-password/${userId}`, payload)
+          .then(response => {
+            toast.success("Password changed successfully");
+            // Handle successful password change (e.g., redirect or update UI)
+          })
+          .catch(error => {
+            toast.error("Failed to change password. Please try again.");
+            console.error("Password change error:", error);
+            // Handle errors (e.g., display specific message)
+          });
       } catch (error) {
         console.error("Error decoding token:", error);
         toast.error("Invalid token. Please log in again.");
       }
     },
     
-    
   });
 
   return (
-    <Box
+     <div className="app">
+     <UserSidebar />
+     <main className="content">
+      
+       <Box
       sx={{
         marginTop: 8,
         display: "flex",
@@ -108,8 +126,11 @@ function ChangePassword() {
           Change Password
         </Button>
       </Box>
-      <ToastContainer />
-    </Box>
+      
+      <Box p="500px 0"> </Box>
+   </Box>
+     </main>
+   </div>
   );
 }
 

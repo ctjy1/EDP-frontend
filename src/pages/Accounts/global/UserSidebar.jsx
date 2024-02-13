@@ -56,7 +56,7 @@ const UserSidebar = () => {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: "#9e5b1f",
+          background: "#9B0000",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
