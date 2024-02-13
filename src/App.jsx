@@ -89,9 +89,9 @@ function App() {
       case "user":
         return "white"; //  color for regular users
       case "Account Manager":
-        return "#28a745"; //  color for account managers
+        return "#1F2A40"; //  color for account managers
       case "Super Adminstrator":
-        return "black"; //  color for super administrators
+        return "#1F2A40"; //  color for super administrators
       default:
         return "white"; // Default color
     }
@@ -103,7 +103,7 @@ function App() {
       case "user":
         return "black"; //  color for regular users
       case "Account Manager":
-        return "#28a745"; //  color for account managers
+        return "white"; //  color for account managers
       case "Super Adminstrator":
         return "white"; //  color for super administrators
       default:
@@ -223,10 +223,7 @@ function App() {
                   <Box sx={{ flexGrow: 1 }}></Box>
                   {user ? (
                     <>
-                      <Link
-                        to="/userProfile"
-                        style={linkStyle}
-                      >
+                      <Link to="/userProfile" style={linkStyle}>
                         <Typography
                           component="div"
                           style={{ display: "flex", alignItems: "center" }}
@@ -239,17 +236,15 @@ function App() {
                     </>
                   ) : (
                     <>
-                      <Link
-                        to="/register"
-                        style={linkStyle}
-                      >
-                        <Typography>REGISTER</Typography>
+                      <Link to="/register" style={linkStyle}>
+                        <Typography sx={{ fontSize: "20px" }}>
+                          <strong>REGISTER</strong>
+                        </Typography>
                       </Link>
-                      <Link
-                        to="/login"
-                        style={linkStyle}
-                      >
-                        <Typography>LOGIN</Typography>
+                      <Link to="/login" style={linkStyle}>
+                        <Typography sx={{ fontSize: "20px" }}>
+                          <strong>LOGIN</strong>
+                        </Typography>
                       </Link>
                     </>
                   )}
@@ -295,12 +290,13 @@ function App() {
                 <Route path={"/checkoutsuccess"} element={<CheckoutSuccess />} />
                 <Route path={"/userorders"} element={<UserOrders />} />
                 <Route path={"/setbudget"} element={<SetBudget />} />
-                <Route path={"/bookingchart"} element={<BookingChart />} />
+                
 
 
                 {/* Carts Routes for admin side */}
                 <Route path={"/carts"} element={<Carts />} />
                 <Route path={"/orders"} element={<Orders />} />
+                <Route path={"/bookingchart"} element={<BookingChart />} />
 
 
 
