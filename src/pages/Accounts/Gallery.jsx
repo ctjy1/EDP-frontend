@@ -29,6 +29,8 @@ function Gallery() {
   const [search, setSearch] = useState("");
   const { user } = useContext(UserContext);
 
+  console.log('Authenticated User ID:', user);
+  
   const onSearchChange = (e) => {
     setSearch(e.target.value);
   };
