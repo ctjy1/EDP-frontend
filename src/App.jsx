@@ -33,6 +33,8 @@ import ReferralPage from './pages/Accounts/ReferralPage';
 import AdminHome from './pages/AdminHome';
 import UserHome from './pages/UserHome';
 import Chatbot from './pages/Components/Chatbot';
+import Activities from './pages/activities';
+import SingleActivity from './pages/Activity/SingleActivity';
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from './RedirectHandler';
@@ -239,6 +241,9 @@ function App() {
                 <Route path={"/adminHome"} element={<AdminHome />} />
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
+
+                <Route path="/activities" element={<Activities />} />
+                <Route path="/activities/:id" element={<SingleActivity />} />
               </Routes>
             </Container>
           </ThemeProvider>
