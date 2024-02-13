@@ -30,7 +30,9 @@ function ManageRewards() {
 
     const getRewards = () => {
       http.get('/reward').then((res) => {
-        setRewardList(res.data);
+        const filterDeletedRewards = res.data.filter(reward => reward.deletedAt === null);
+        setRewardList(filterDeletedRewards);
+        console.log(rewardList);
       });
     };
 
@@ -46,12 +48,6 @@ function ManageRewards() {
       }, {});
 
       return Object.values(groupedRewards);
-    };
-
-    const searchRewards = () => {
-      http.get(`/reward?search=${search}`).then((res) => {
-        setRewardList(res.data);
-      });
     };
 
     useEffect(() => {
@@ -128,7 +124,7 @@ function ManageRewards() {
       columns.push(
         { field: 'redeemedAt', headerName: 'Redeemed At', width: 100 },
         { field: 'redeemedBy', headerName: 'Redeemed By', width: 100 },
-        { field: 'usedAt', headerName: 'Used At', width: 100 },
+        { field: 'usedAt', headerName: 'Used At', width: 100 }
       );
     }
     
@@ -161,6 +157,9 @@ function ManageRewards() {
       expiryDate: dayjs(reward.expiryDate).format('YYYY-MM-DD'),
       discount: reward.discount,
       description: reward.description,
+      redeemedAt: reward.redeemedAt ? dayjs(reward.redeemedAt).format('YYYY-MM-DD') : null,
+      redeemedBy: reward.redeemedBy,
+      usedAt: reward.usedAt ? dayjs(reward.usedAt).format('YYYY-MM-DD HH:mm:ss') : null
     }));
 
     const [pageSize, setPageSize] = useState(5)

@@ -15,7 +15,7 @@ import RewardSidebar from "./global/RewardSidebar";
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-function ManageExpiredRewards() {
+function ManageUsedRewards() {
   {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -30,11 +30,8 @@ function ManageExpiredRewards() {
 
     const getRewards = () => {
       http.get('/reward').then((res) => {
-        const expiredRewards = res.data.filter(reward => {
-          const expiryDate = new Date(reward.expiryDate);
-          return expiryDate < new Date(); // Check if expiryDate is in the past
-        });
-        setRewardList(expiredRewards);
+        const usedRewards = res.data.filter(reward => reward.usedAt !== null);
+        setRewardList(usedRewards);
       });
     };
 
@@ -117,45 +114,24 @@ function ManageExpiredRewards() {
 
 
     const columns = [
-      { field: 'rewardName', headerName: 'Reward Name', width: 120 },
-      { field: 'pointsRequired', headerName: 'Points Required', width: 120 },
-      { field: 'expiryDate', headerName: 'Expiry Date', width: 120 },
-      { field: 'discount', headerName: 'Discount', width: 100 },
-      { field: 'description', headerName: 'Description', width: 180 }
+      { field: 'rewardName', headerName: 'Reward Name', width: 100 },
+      { field: 'pointsRequired', headerName: 'Points Required', width: 90 },
+      { field: 'expiryDate', headerName: 'Expiry Date', width: 100 },
+      { field: 'discount', headerName: 'Discount', width: 60 },
+      { field: 'description', headerName: 'Description', width: 160 }
     ];
 
     if (isGrouped) {
-      columns.push({ field: 'quantity', headerName: 'Quantity', width: 90 });
+      columns.push({ field: 'quantity', headerName: 'Quantity', width: 70 });
     }
     
     if (!isGrouped) {
       columns.push(
-        { field: 'redeemedAt', headerName: 'Redeemed At', width: 120 },
-        { field: 'redeemedBy', headerName: 'Redeemed By', width: 120 },
-        { field: 'deletedAt', headerName: 'Deleted At', width: 120 }
+        { field: 'redeemedAt', headerName: 'Redeemed At', width: 100 },
+        { field: 'redeemedBy', headerName: 'Redeemed By', width: 100 },
+        { field: 'usedAt', headerName: 'Used At', width: 100 }
       );
-    }
-    
-    columns.push({
-      field: "manage",
-      headerName: "Manage",
-      flex: 1,
-      renderCell: (params) => (
-        <Link to={!isGrouped ? `/editReward/${params.row.id}` : `/manageMoreRewards/${params.row.id}`}>
-          <Button
-            variant="contained"
-            sx={{
-              background: '#009578',
-              '&:hover': {
-                background: '#008168',
-              },
-            }}
-          >
-            {isGrouped ? "Manage" : "Edit"}
-          </Button>
-        </Link>
-      ),
-    });
+    };
 
     const rows = groupRewardsByOption(rewardList, groupingOption).map((reward, i) => ({
       id: reward.id,
@@ -165,6 +141,9 @@ function ManageExpiredRewards() {
       expiryDate: dayjs(reward.expiryDate).format('YYYY-MM-DD'),
       discount: reward.discount,
       description: reward.description,
+      redeemedAt: reward.redeemedAt ? dayjs(reward.redeemedAt).format('YYYY-MM-DD') : null,
+      redeemedBy: reward.redeemedBy,
+      usedAt: reward.usedAt
     }));
 
     const [pageSize, setPageSize] = useState(5)
@@ -176,8 +155,8 @@ function ManageExpiredRewards() {
         <main className="adminContent">
           <Box m="20px">
 
-            <Header title={<span style={{ color: "#fff" }}>MANAGING ACTIVE REWARDS</span>} 
-            subtitle={<span style={{ color: "#4cceac" }}>Active Rewards</span>} />
+            <Header title={<span style={{ color: "#fff" }}>MANAGING USED REWARDS</span>} 
+            subtitle={<span style={{ color: "#4cceac" }}>Used Rewards</span>} />
 
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2}}>
@@ -316,4 +295,4 @@ function ManageExpiredRewards() {
   }
 }
 
-export default ManageExpiredRewards;
+export default ManageUsedRewards;
