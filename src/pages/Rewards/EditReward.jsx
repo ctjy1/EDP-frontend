@@ -56,10 +56,14 @@ function EditReward() {
             http.put(`/reward/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate(`/manageMoreRewards/${id}`);
+                    navigate(`/manageRewards`);
                 });
         }
     });
+
+    const handleDateChange = (date) => {
+      formik.setFieldValue('expiryDate', date.format('YYYY-MM-DD'));
+  };
 
     const [open, setOpen] = useState(false);
 
@@ -80,165 +84,142 @@ function EditReward() {
     }
 
     return (
-        <Box>
-            <Typography variant="h5" sx={{ my: 2 }}>
-                Edit Reward
-            </Typography>
-            {
-                !loading && (
-                    <Box component="form" onSubmit={formik.handleSubmit}>
-                        <TextField
-                            InputProps={{
-                                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
-                              }}
-                            fullWidth margin="dense" autoComplete="off"
-                            label={
-                                <Typography
-                                  style={{
-                                    color: "#1a1a1a",
-                                  }}
-                                >
-                                  Reward Name
-                                </Typography>
-                              }
-                            name="rewardName"
-                            value={formik.values.rewardName}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.rewardName && Boolean(formik.errors.rewardName)}
-                            helperText={formik.touched.rewardName && formik.errors.rewardName}
-                        />
-                        <TextField
-                            InputProps={{
-                                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
-                              }}
-                                fullWidth margin="dense" autoComplete="off"
-                                multiline minRows={2}
-                                label={
-                                    <Typography
-                                      style={{
-                                        color: "#1a1a1a",
-                                      }}
-                                    >
-                                      Description
-                                    </Typography>
-                                  }
-                            name="description"
-                            value={formik.values.description}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.description && Boolean(formik.errors.description)}
-                            helperText={formik.touched.description && formik.errors.description}
-                        />
-                        <TextField
-                            InputProps={{
-                                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
-                              }}
-                                fullWidth margin="dense" autoComplete="off"
-                                type="number"
-                                inputProps={{
-                                    min: 0,
-                                    step: 0.1,
-                                }}
-                                label={
-                                    <Typography
-                                      style={{
-                                        color: "#1a1a1a",
-                                      }}
-                                    >
-                                      Discount
-                                    </Typography>
-                                  }
-                            name="discount"
-                            value={formik.values.discount}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.discount && Boolean(formik.errors.discount)}
-                            helperText={formik.touched.discount && formik.errors.discount} />
-                        <TextField
-                            InputProps={{
-                                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
-                              }}
-                                fullWidth margin="dense" autoComplete="off"
-                                type="number"
-                                inputProps={{
-                                    min: 0,
-                                    step: 0.1,
-                                }}
-                                label={
-                                    <Typography
-                                      style={{
-                                        color: "#1a1a1a",
-                                      }}
-                                    >
-                                      Points Required 
-                                    </Typography>
-                                  }
-                            name="pointsRequired"
-                            value={formik.values.pointsRequired}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.pointsRequired && Boolean(formik.errors.pointsRequired)}
-                            helperText={formik.touched.pointsRequired && formik.errors.pointsRequired} />
+      <Box sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}>
+        <Typography variant="h5" 
+        sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color: 'red' }}>
+            Edit Reward
+        </Typography>
+        <Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: "500px" }}>
+            <TextField
+                InputProps={{
+                    style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
+                  }}
+                fullWidth margin="dense" autoComplete="off"
+                label={
+                    <Typography
+                      style={{
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Reward Name
+                    </Typography>
+                  }
+                name="RewardName"
+                value={formik.values.rewardName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.rewardName && Boolean(formik.errors.rewardName)}
+                helperText={formik.touched.rewardName && formik.errors.rewardName}
+            />
+            <TextField
+            InputProps={{
+                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
+              }}
+                fullWidth margin="dense" autoComplete="off"
+                multiline minRows={2}
+                label={
+                    <Typography
+                      style={{
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Description
+                    </Typography>
+                  }
+                name="Description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.description && Boolean(formik.errors.description)}
+                helperText={formik.touched.description && formik.errors.description}
+            />
+            <TextField
+            InputProps={{
+                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
+              }}
+                fullWidth margin="dense" autoComplete="off"
+                type="number"
+                inputProps={{
+                    min: 0,
+                    step: 0.1,
+                }}
+                label={
+                    <Typography
+                      style={{
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Discount
+                    </Typography>
+                  }
+                name="Discount"
+                value={formik.values.discount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.discount && Boolean(formik.errors.discount)}
+                helperText={formik.touched.discount && formik.errors.discount} />
+            <TextField
+             InputProps={{
+                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
+              }}
+                fullWidth margin="dense" autoComplete="off"
+                type="number"
+                inputProps={{
+                    min: 0,
+                    step: 0.1,
+                }}
+                label={
+                    <Typography
+                      style={{
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Points Required 
+                    </Typography>
+                  }
+                name="PointsRequired"
+                value={formik.values.pointsRequired}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.pointsRequired && Boolean(formik.errors.pointsRequired)}
+                helperText={formik.touched.pointsRequired && formik.errors.pointsRequired} />
 
-                        <TextField type={"date"}
-                            InputProps={{
-                                style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
-                              }}
-                            fullWidth margin="normal" autoComplete="off"
-                            label={
-                                <Typography
-                                  style={{
-                                    color: "#1a1a1a",
-                                  }}
-                                >
-                                  Date of Expiry
-                                </Typography>
-                              }
-                            name="expiryDate"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                            value={formik.values.expiryDate}
-                            onChange={formik.handleChange}
-                            format="dd-mm-yyyy"
-                            error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
-                            helperText={formik.touched.expiryDate && formik.errors.expiryDate}
-                        />
-                        <Box sx={{ mt: 2 }}>
-                            <Button variant="contained" type="submit">
-                                Update
-                            </Button>
-                            <Button variant="contained" sx={{ ml: 2 }} color="error"
-                                onClick={handleOpen}>
-                                Delete
-                            </Button>
-                        </Box>
-                    </Box>
-                )
-            }
-
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>
-                    Delete Reward
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this reward?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="inherit"
-                        onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" color="error"
-                        onClick={deleteReward}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <TextField type={"date"}
+               InputProps={{
+                    style: { border: '2px solid #ccc', color: "black" }, // Apply border to input element
+                  }}
+                fullWidth margin="normal" autoComplete="off"
+                label={
+                    <Typography
+                      style={{
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Date of Expiry
+                    </Typography>
+                  }
+                name="ExpiryDate"
+                InputLabelProps={{
+                    shrink: true
+                }}
+                value={formik.values.expiryDate}
+                onChange={(e) => handleDateChange(dayjs(e.target.value))}
+                format = "dd-mm-yyyy"
+                error={formik.touched.expiryDate && Boolean(formik.errors.expiryDate)}
+                helperText={formik.touched.expiryDate && formik.errors.expiryDate}
+            />
+            <Box sx={{ mt: 2 }}>
+                <Button variant="contained" type="submit">
+                    Update Reward
+                </Button>
+            </Box>
         </Box>
+    </Box>
     );
 }
 

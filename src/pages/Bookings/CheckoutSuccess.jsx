@@ -9,7 +9,9 @@ function CheckoutSuccess() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        http.post("/cart/confirm-checkout")
+        localStorage.removeItem('rewardData');
+
+        http.post("/cart/confirm-checkout", {rewardData})
     }, []);
 
     return (

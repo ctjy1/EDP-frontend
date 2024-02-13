@@ -138,13 +138,14 @@ const UserSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+              <Item
               title="My Rewards"
               to="/viewreward"
               icon={<LocalActivityOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              />
+            
 
 {user && (
   <Item

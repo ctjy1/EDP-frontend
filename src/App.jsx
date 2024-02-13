@@ -61,7 +61,7 @@ import MoreRewards from './pages/Rewards/MoreRewards';
 import ManageRewards from './pages/Rewards/ManageRewards';
 import ManageMoreRewards from './pages/Rewards/ManageMoreRewards';
 import ManageDeletedRewards from './pages/Rewards/ManageDeletedRewards';
-import ManageExpiredRewards from './pages/Rewards/ManageExpiredRewards';
+import ManageUsedRewards from "./pages/Rewards/ManageUsedRewards";
 
 import ViewReward from './pages/Rewards/ViewReward';
 
@@ -448,7 +448,7 @@ function App() {
                 <Route path={"/manageRewards"} element={<ManageRewards/>} />
                 <Route path={"/manageMoreRewards/:id"} element={<ManageMoreRewards/>} />
                 <Route path={"/manageDeletedRewards"} element={<ManageDeletedRewards/>}/>
-                <Route path={"/manageExpiredRewards"} element={<ManageExpiredRewards/>}/>
+                <Route path={"/manageUsedRewards"} element={<ManageUsedRewards/>}/>
                 <Route path={"/rewards"} element={<Rewards />} />
                 <Route path={"/addreward"} element={<AddReward />} />
                 <Route path={"/editreward/:id"} element={<EditReward />} />

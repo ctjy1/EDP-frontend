@@ -9,11 +9,16 @@ import UserContext from '../../contexts/UserContext';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useNavigate } from 'react-router-dom';
 
 
 function Checkout() {
     const [cartList, setCartList] = useState([]);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const [discountApplied, setDiscountApplied] = useState(null);
+    const [storedReward, setStoredReward] = useState(null);
 
     // Add this log statement to check the userId of the authenticated user
     console.log('Authenticated User ID:', user);
@@ -33,8 +38,26 @@ function Checkout() {
     };
 
     useEffect(() => {
-        getCarts();
-        getBudget();
+        const fetchData = async () => {
+            try {
+                getCarts();
+                getBudget();
+    
+                const reward = await JSON.parse(localStorage.getItem('rewardData'));
+                setStoredReward(reward);
+                
+                // Check if a reward is stored in localStorage
+                if (reward) {
+                    console.log("this is the reward discount:", reward.discount);
+                    setDiscountApplied(reward.discount || null);
+                    console.log("this is the stored reward id", reward.id);
+                }
+            } catch (error) {
+                console.error("Error fetching reward data:", error);
+            }
+        };
+    
+        fetchData();
     }, []);
 
     const handleEmptyCart = () => {
@@ -54,10 +77,25 @@ function Checkout() {
     const totalPayable = cartList
         .filter(cart => user && user.id === cart.userId)
         .reduce((total, cartItem) => {
-            return total + (cartItem.price || 0);
+            const cartPrice = cartItem.price || 0;
+        if (discountApplied !== null && discountApplied > 0) {
+            const discountedPrice = cartPrice * ((100 - discountApplied) / 100);
+            return total + discountedPrice;
+        } else {
+            return total + cartPrice;
+        }
         }, 0);
 
     const handleCheckout = () => {
+       
+        http.put(`/reward/${storedReward.id}/use`)
+            .then((res) => {
+            console.log("Reward was used successfully.");
+        })
+            .catch((error) => {
+            console.error("Error when using reward:", error);
+        });
+
         http.post("/cart/create-checkout-session")
             .then((res) => {
                 console.log(res.data);
@@ -65,7 +103,6 @@ function Checkout() {
             })
             .catch((error) => {
                 console.error(error);
-                // Handle error, show error message, etc.
             });
     };
 
@@ -92,7 +129,7 @@ function Checkout() {
                 <Box>
                     {/* Add log statement to check if the user's cart is empty */}
                     {console.log('User Cart is Not Empty')}
-                    
+
                     <Box
                         sx={{
                             display: 'grid',
@@ -189,8 +226,19 @@ function Checkout() {
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column', textAlign: 'right' }}>
                                 <Typography variant="h3" sx={{ color: '#333' }}>
-                                    %
+                                   {discountApplied !== null ? `${discountApplied}%` : 'None'}
                                 </Typography>
+                                {!discountApplied && (
+                                    <Button
+                                        variant="outlined"
+                                        sx={{ fontSize: '0.8rem', color: '#4CAF50', textTransform: 'none' }}
+                                        onClick={() => {
+                                            navigate('/viewreward', { state: { fromCartPage: true } });
+                                        }}
+                                    >
+                                        Add Reward
+                                    </Button>
+                                )}
                             </Box>
                         </Box>
                         <Typography color="text.secondary" sx={{ mb: 1, color: '#333' }}>
