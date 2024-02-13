@@ -18,12 +18,14 @@ import { Clear } from '@mui/icons-material';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import http from "../../http";
 import SearchIcon from "@mui/icons-material/Search";
+import UserContext from '../../contexts/UserContext';
 import { ColorModeContext, useMode } from '../../themes/MyTheme';
 import Divider from '@mui/material/Divider';
 import CustomProgressBar from './RewardComponents/CustomProgressBar';
 import RewardFilter from './RewardComponents/RewardFilter';
 import dayjs from 'dayjs';
 import * as jwtDecodeModule from "jwt-decode";
+import { useLocation } from 'react-router-dom';
 
 function ViewRewards() {
     const [rewardList, setRewardList] = useState([]);
@@ -36,7 +38,11 @@ function ViewRewards() {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [hoveredCard, setHoveredCard] = useState(null);
     const [hoveredCardRedeemed, setHoveredCardRedeemed] = useState('');
-    const [hasRentalData, setHasRentalData] = useState(false);
+
+    const location = useLocation();
+    const { state } = location;
+    const { fromCartPage } = state || {}
+   
     const [theme, colorMode] = useMode();
     const navigate = useNavigate();
 
@@ -57,7 +63,7 @@ function ViewRewards() {
                 rewards.forEach(reward => {
                     if (String(reward.redeemedBy) === String(decodedUser.nameid)) {
                         redeemedRewards.push(reward);
-                    } else {
+                    } else if (reward.UsedAt == null || reward.DeletedAt == null) {
                         unredeemedRewards.push(reward);
                     }
                 });
@@ -213,7 +219,7 @@ function ViewRewards() {
         <>
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
-                    <Navbar />
+                    
                     <Box>
                         {/* Snackbar for successful redemption */}
                         <Snackbar
@@ -253,7 +259,7 @@ function ViewRewards() {
                                 )
                             }
 
-                            {hasRentalData && (
+                            {fromCartPage && (
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
                                     <Button
                                         color="primary"
@@ -297,7 +303,7 @@ function ViewRewards() {
                                                                 <Typography variant="h6" sx={{ flexGrow: 1, color: "white" }}>
                                                                     {group.rewards[0].rewardName}
                                                                 </Typography>
-                                                                {hasRentalData && (
+                                                                {fromCartPage && (
                                                                     <Button
                                                                         color="primary"
                                                                         sx={{
@@ -312,7 +318,7 @@ function ViewRewards() {
                                                                         }}
                                                                         onClick={() => {
                                                                             localStorage.setItem('rewardData', JSON.stringify(group.rewards[0]));
-                                                                            navigate('/customer/checkout');
+                                                                            navigate('/checkout');
                                                                         }}
                                                                     >
                                                                         Apply at Checkout

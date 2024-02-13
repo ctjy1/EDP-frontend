@@ -147,38 +147,17 @@ const RewardSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Reward Insights
-            </Typography>
-            <Item
-              to="/rewardData"
-              title="Reward Analytics"
-              icon={<StarIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
             
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Inactive Rewards Management
+              Inactive
             </Typography>
             <Item
               to="/manageDeletedRewards"
               title="Manage Deleted Rewards"
-              icon={<StarIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              to="/manageExpiredRewards"
-              title="Manage Expired Rewards"
               icon={<StarIcon />}
               selected={selected}
               setSelected={setSelected}

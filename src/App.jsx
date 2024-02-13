@@ -54,14 +54,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BookingChart from "./pages/Bookings/BookingChart";
 
 // Import Reward pages
-import Rewards from "./pages/Rewards/Rewards";
-import AddReward from "./pages/Rewards/AddReward";
-import EditReward from "./pages/Rewards/EditReward";
-import MoreRewards from "./pages/Rewards/MoreRewards";
-import ManageRewards from "./pages/Rewards/ManageRewards";
-import ManageMoreRewards from "./pages/Rewards/ManageMoreRewards";
-import ManageDeletedRewards from "./pages/Rewards/ManageDeletedRewards";
-import ManageExpiredRewards from "./pages/Rewards/ManageExpiredRewards";
+import Rewards from './pages/Rewards/Rewards';
+import AddReward from './pages/Rewards/AddReward';
+import EditReward from './pages/Rewards/EditReward';
+import MoreRewards from './pages/Rewards/MoreRewards';
+import ManageRewards from './pages/Rewards/ManageRewards';
+import ManageMoreRewards from './pages/Rewards/ManageMoreRewards';
+import ManageDeletedRewards from './pages/Rewards/ManageDeletedRewards';
+import ManageUsedRewards from "./pages/Rewards/ManageUsedRewards";
 
 import ViewReward from "./pages/Rewards/ViewReward";
 
@@ -452,23 +452,16 @@ function App() {
                 <Route path={"/orders"} element={<Orders />} />
                 <Route path={"/bookingchart"} element={<BookingChart />} />
 
-                <Route path={"/manageRewards"} element={<ManageRewards />} />
-                <Route
-                  path={"/manageMoreRewards/:id"}
-                  element={<ManageMoreRewards />}
-                />
-                <Route
-                  path={"/manageDeletedRewards"}
-                  element={<ManageDeletedRewards />}
-                />
-                <Route
-                  path={"/manageExpiredRewards"}
-                  element={<ManageExpiredRewards />}
-                />
+
+
+                <Route path={"/manageRewards"} element={<ManageRewards/>} />
+                <Route path={"/manageMoreRewards/:id"} element={<ManageMoreRewards/>} />
+                <Route path={"/manageDeletedRewards"} element={<ManageDeletedRewards/>}/>
+                <Route path={"/manageUsedRewards"} element={<ManageUsedRewards/>}/>
                 <Route path={"/rewards"} element={<Rewards />} />
                 <Route path={"/addreward"} element={<AddReward />} />
                 <Route path={"/editreward/:id"} element={<EditReward />} />
-                <Route path={"/morerewards/:id"} element={<MoreRewards />} />
+                <Route path={"/morerewards/:id"} element={<MoreRewards />}/>
 
                 <Route path={"/viewreward"} element={<ViewReward />} />
               </Routes>
