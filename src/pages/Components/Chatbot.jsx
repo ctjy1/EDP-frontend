@@ -1,31 +1,38 @@
-import "../../App.css";
-import image from "../../assets/bot_image.jpg";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
+import '../../App.css';
+import image from '../../assets/bot_image.jpg';
+import chatIcon from '../../assets/chat_icon.svg';
+import CancelIcon from '@mui/icons-material/Cancel'; // Corrected import statement
+import { pink } from '@mui/material/colors'; // Importing colors if you want to use the pink color for the icon
 
 function Chatbox() {
-  const [message, setMessage] = useState(""); // State to handle input message
+  const [message, setMessage] = useState('');
+  const [isChatVisible, setIsChatVisible] = useState(false);
   const botmessage = useRef();
   const input = useRef();
 
   useEffect(() => {
-    // Function to set status based on certain conditions
     const checkStatus = () => {
-      // Example condition for demonstration
-      let isActive = true; // Determine active status dynamically if needed
-      const status = document.querySelector(".status");
-      status.innerText = isActive ? "Active" : "Not Active";
-      status.style.color = isActive ? "green" : "red";
+      let isActive = true;
+      const status = document.querySelector('.status');
+      status.innerText = isActive ? 'Active' : 'Not Active';
+      status.style.color = isActive ? 'green' : 'red';
     };
     checkStatus();
   }, []);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Prevent the default form submission on Enter
+      e.preventDefault();
       handleInput();
     }
   };
 
+  const toggleChatVisibility = () => {
+    setIsChatVisible(!isChatVisible);
+  };
+
+ 
   const handleInput = () => {
     const inputVal = message.trim().toLowerCase(); // Normalize input
     let responseMessage = "";
@@ -107,43 +114,51 @@ function Chatbox() {
   };
 
   return (
-    <div className="App1">
-      <div className="wrapper">
-        <div className="content">
-          <div className="header">
-            <div className="img">
-              <img src={image} alt="Chat Bot" />
-            </div>
-            <div className="right">
-              <div className="name">ChatBot</div>
-              <div className="status">Active</div>
-            </div>
-          </div>
-          <div className="main">
-            <div className="main_content">
-              <div className="messages">
-                <div className="bot-message" id="message1" ref={botmessage}></div>
-                <div className="human-message" id="message2"></div> {/* Note: You may want to use this ref if you plan to display human messages */}
+    <div className="chat-container">
+      <div className={`chat-icon ${isChatVisible ? 'hide' : ''}`} onClick={toggleChatVisibility}>
+        <img src={chatIcon} alt="Chat Icon" />
+      </div>
+      <div className={`App1 ${isChatVisible ? '' : 'hide'}`}>
+        <div className="wrapper">
+          <div className="content">
+            <div className="header">
+              <div className="img">
+                <img src={image} alt="Chat Bot" />
               </div>
-            </div>
-          </div>
-          <div className="bottom">
-            <div className="btm">
-              <div className="input">
-                <input
-                  type="text"
-                  id="input"
-                  placeholder="Enter your message"
-                  ref={input}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
-              </div>
-              <div className="btn">
-                <button onClick={handleInput}>
-                  <i className="fas fa-paper-plane"></i>Send
+              <div className="right">
+                <div className="name">ChatBot</div>
+                <div className="status">Active</div>
+                <button className="close-btn" onClick={toggleChatVisibility} aria-label="Close chat">
+                  <CancelIcon fontSize ="large" sx= {{color: 'orange'}} />
                 </button>
+              </div>
+            </div>
+            <div className="main">
+              <div className="main_content">
+                <div className="messages">
+                  <div className="bot-message" ref={botmessage}></div>
+                  <div className="human-message" id="message2"></div>
+                </div>
+              </div>
+            </div>
+            <div className="bottom">
+              <div className="btm">
+                <div className="input">
+                  <input
+                    type="text"
+                    id="input"
+                    placeholder="Enter your message"
+                    ref={input}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                  />
+                </div>
+                <div className="btn">
+                  <button onClick={handleInput}>
+                    <i className="fas fa-paper-plane"></i>Send
+                  </button>
+                </div>
               </div>
             </div>
           </div>
