@@ -12,6 +12,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Header from "../../components/Header";
 import UserContext from "../../contexts/UserContext";
 import http from "../../http";
+import UserSidebar from "./global/UserSidebar";
 
 
 function UserReferralTracking() {{
@@ -151,6 +152,7 @@ console.log("Rows:", rows); // Log the generated rows to the console
 
   return (
       <div className="app">
+        <UserSidebar />
           <main className="content">
               <Box m="20px">
 
@@ -176,7 +178,7 @@ console.log("Rows:", rows); // Log the generated rows to the console
                   </Box>
 
                   <Box
-                      height='75vh'
+                      height='40vh'
                       m='40px 0 0 0'
                       mb='200px'
                       sx={{

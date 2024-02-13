@@ -13,6 +13,7 @@ import {
   CardContent,
   useTheme,
 } from "@mui/material";
+import RedirectHandler from '../../RedirectHandler';
 
 function UserProfile() {
   const [userList, setUserList] = useState([]);
@@ -44,8 +45,10 @@ function UserProfile() {
   }, [location, setUser, user]);
 
   return (
+    
     <div className="app">
       <UserSidebar />
+      <RedirectHandler setUser={setUser}/>
       <main className="content">
         <Box m="20px">
           <Box mt="20px">

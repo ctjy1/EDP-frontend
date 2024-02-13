@@ -11,6 +11,7 @@ import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import DirectionsBikeOutlinedIcon from "@mui/icons-material/DirectionsBikeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InsightsIcon from '@mui/icons-material/Insights';
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -151,8 +152,16 @@ const UserSidebar = () => {
 
             <Item
               title="Invite a friend"
-              to="/"
+              to="/ReferralPage"
               icon={<StarIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+<Item
+              title="Referral Tracking"
+              to="/userReferralTracking"
+              icon={<InsightsIcon />}
               selected={selected}
               setSelected={setSelected}
             />

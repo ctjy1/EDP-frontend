@@ -158,7 +158,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              to="/"
+              to="/manageAdmin"
               title="Manage Admins"
               icon={<PeopleOutlinedIcon />}
               selected={selected}

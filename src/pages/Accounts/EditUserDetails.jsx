@@ -91,7 +91,7 @@ function EditUserDetails() {
 
   return (
     <Box sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid #c17914", paddingBottom: "7px" }}>
+      <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid #c17914", paddingBottom: "7px", color: 'red' }}>
         <strong>Edit User Details</strong>
       </Typography>
 

@@ -117,7 +117,7 @@ function Gallery() {
                     <Typography variant="h3" sx={{ flexGrow: 1 }}>
                       <strong>{gallery.title}</strong>
                     </Typography>
-                    {user && user.id === gallery.userId && (
+                    {user && Number(user.id) === Number(gallery.userId) && (
                       <Link to={`/editpost/${gallery.id}`}>
                         <IconButton color="white" sx={{ padding: "4px" }}>
                           <Edit />

@@ -25,6 +25,7 @@ import UserReferralTracking from './pages/Accounts/UserReferralTracking';
 import UserProfile from './pages/Accounts/UserProfile';
 import ManageReferralTracking from './pages/Accounts/ManageReferralTracking';
 import ManageUsers from './pages/Accounts/ManageUsers';
+import ManageAdmin from './pages/Accounts/ManageAdmin';
 import Register from './pages/Accounts/Register';
 import Login from './pages/Accounts/Login';
 import ForgetPassword from './pages/Accounts/ForgetPassword';
@@ -81,16 +82,7 @@ function App() {
                   </Link> */}
                   {userRole === "user" && (
                     <>
-                      <Link
-                        to="/userReferralTracking"
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                          margin: "0 10px",
-                        }}
-                      >
-                        <Typography>User Referral Tracking</Typography>
-                      </Link>
+                     
                       <Link
                         to="/changePassword"
                         style={{
@@ -230,6 +222,7 @@ function App() {
                 <Route path={"/referralPage"} element={<ReferralPage />} />
                 <Route path={"/userProfile"} element={<UserProfile />} />
                 <Route path={"/manageUsers"} element={<ManageUsers />} />
+                <Route path={"/manageAdmin"} element={<ManageAdmin />} />
                 <Route
                   path={"/manageReferralTracking"}
                   element={<ManageReferralTracking />}
@@ -240,6 +233,7 @@ function App() {
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
               </Routes>
+              <Chatbot />
             </Container>
           </ThemeProvider>
         </ColorModeContext.Provider>

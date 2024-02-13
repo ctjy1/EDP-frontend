@@ -13,7 +13,7 @@ import UserContext from "../../contexts/UserContext";
 import http from "../../http";
 import AccountSidebar from "./global/AccountSidebar";
 
-function ManageUsers() {{
+function ManageAdmin() {{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [userList, setUserList] = useState([]);
@@ -28,8 +28,9 @@ function ManageUsers() {{
     setSearch(e.target.value);
   };
 
+
   const getUsers = () => {
-    http.get("/User").then((res) => {
+    http.get("/User/admins").then((res) => {
       setUserList(res.data);
     }).catch((error) => {
         console.log("Error fetching user details:", error);
@@ -37,7 +38,7 @@ function ManageUsers() {{
   };
 
   const searchUsers = () => {
-    http.get(`/Users?search=${search}`).then((res) => {
+    http.get(`/Users/?search=${search}`).then((res) => {
         setUserList(res.data);
     });
   };
@@ -94,7 +95,7 @@ function ManageUsers() {{
     
 
     const columns = [
-      { field: 'id', headerName: 'User ID', width: 90, cellClassName: 'name-column--cell' },
+      { field: 'id', headerName: 'Admin ID', width: 90, cellClassName: 'name-column--cell' },
       {
         field: 'name',
         headerName: 'Name',
@@ -104,9 +105,10 @@ function ManageUsers() {{
           return `${firstName} ${lastName}`;
         },
       },
-      { field: 'username', headerName: 'Username', width: 110 },
+      
       { field: 'email', headerName: 'Email', width: 150 },
-      { field: 'contactNumber', headerName: 'Mobile Number', width: 150 },
+      { field: 'contactNumber', headerName: 'Mobile Number', width: 110 },
+      { field: 'userRole', headerName: 'User Role', width: 150 },
       {
         field: 'manage',
         headerName: 'Manage',
@@ -153,9 +155,7 @@ const rows = userList.map((user, i) => ({
     username: user.username,
     email: user.email,
     contactNumber: user.contactNumber,
-    address1: user.address1,
-    address2: user.address2,
-    referralCode: user.referralCode,
+   userRole: user.userRole
   }));
 
   const [pageSize, setPageSize] = useState(5)
@@ -167,7 +167,7 @@ const rows = userList.map((user, i) => ({
           <main className="adminContent">
               <Box m="20px">
 
-              <Header title={<span style={{ color: "#fff" }}>MANAGING USERS</span>} subtitle={<span style={{ color: "#4cceac" }}>Managing your user accounts</span>} />
+              <Header title={<span style={{ color: "#fff" }}>MANAGING ADMINSTRATORS</span>} subtitle={<span style={{ color: "#4cceac" }}>Managing our adminstrator accounts</span>} />
 
 
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -234,18 +234,18 @@ const rows = userList.map((user, i) => ({
 
 
                   <Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
-    <DialogTitle><strong>User Details</strong></DialogTitle>
+    <DialogTitle><strong>Adminstrators Details</strong></DialogTitle>
     <DialogContent>
         {selectedUser && (
             <Box>
-                <Typography><strong>User ID:</strong> {selectedUser.id}</Typography>
+                <Typography><strong>Admin ID:</strong> {selectedUser.id}</Typography>
                 <Typography><strong>Name:</strong> {selectedUser.firstName} {selectedUser.lastName}</Typography>
                 <Typography><strong>Username:</strong> @{selectedUser.username}</Typography>
                 <Typography><strong>Email:</strong> {selectedUser.email}</Typography>
                 <Typography><strong>Phone Number:</strong> {selectedUser.contactNumber}</Typography>
-                <Typography><strong>Address 1:</strong> {selectedUser.address1}</Typography>
-                <Typography><strong>Address 2:</strong> {selectedUser.address2}</Typography>
-                <Typography><strong>Referral Code:</strong> {selectedUser.referralCode}</Typography>
+                <Typography><strong>User Role:</strong> {selectedUser.userRole}</Typography>
+              
+               
             </Box>
         )}
     </DialogContent>
@@ -258,7 +258,7 @@ const rows = userList.map((user, i) => ({
   <DialogTitle>Confirm Delete</DialogTitle>
   <DialogContent>
     <DialogContentText>
-      Are you sure you want to delete this user?
+      Are you sure you want to delete this adminstrator?
     </DialogContentText>
   </DialogContent>
   <DialogActions>
@@ -277,4 +277,4 @@ const rows = userList.map((user, i) => ({
   )
 }}
 
-export default ManageUsers
+export default ManageAdmin
