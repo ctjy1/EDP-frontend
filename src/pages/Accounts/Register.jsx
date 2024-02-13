@@ -133,7 +133,7 @@ function Register() {
 
   return (
     <>
-    <NavBar />
+    {/*<NavBar />*/}
     <Box
       sx={{
         marginTop: 8,
