@@ -7,6 +7,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
+import DoneIcon from '@mui/icons-material/CheckCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Header from "../../components/Header";
@@ -15,11 +16,16 @@ import http from "../../http";
 import AccountSidebar from "./global/AccountSidebar";
 
 
+
 function ReferralTracking() {{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [search, setSearch] = useState("");
   const [referralTrackingList, setReferralTrackingList] = useState([]); 
+  const [selectedUser, setSelectedUser] = useState(null); // New state for popup user details
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedUserForDeletion, setSelectedUserForDeletion] = useState(null);
+  const [selectedReferralStatus, setSelectedReferralStatus] = useState("");
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -43,6 +49,8 @@ function ReferralTracking() {{
     getReferrals();
   }, []);
 
+  
+
   const onSearchKeyDown = (e) => {
     if (e.key === "Enter") {
         searchReferrals();
@@ -57,30 +65,57 @@ function ReferralTracking() {{
     searchReferrals("");
     getReferrals();
   };
-  /*const [openPopup, setOpenPopup] = useState(false);
-    const [openCancelDialog, setOpenCancelDialog] = useState(false);
+  const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
-    const handleOpenPopup = (rental) => {
-        // Fetch the complete rental details from the server using the rental ID
-        http.get(`/referralTracking/${rental.id}`).then((res) => {
-            setSelectedRental(res.data);
-            setSelectedRentalStatus(res.data.status);
-            setOpenPopup(true);
-        }).catch((error) => {
-            console.log("Error fetching referral details:", error);
-        });
+    const handleOpenPopup = (user) => {
+      setSelectedUser(user); // Set the selected user details
+      setOpenPopup(true);
+    };
+    const handleClosePopup = () => {
+        setOpenPopup(false);
     };
 
-    const handleClosePopup = () => {
-        setSelectedRental(null);
-        setSelectedRentalStatus("");
-        setOpenPopup(false);
-    };*/
+    const handleOpenCancelDialog = (user) => {
+        setSelectedUserForDeletion(user); // Store the user that might be deleted
+        setOpenCancelDialog(true);
+      };
+    
+      const handleDeleteReferral = () => {
+        if (selectedUserForDeletion) {
+          http.delete(`/ReferralTracking/${selectedUserForDeletion.id}`)
+            .then(() => {
+              // After successful deletion, close the dialog and refresh the list
+              setOpenCancelDialog(false);
+              getReferrals(); // Fetch the updated list of referrals
+            })
+            .catch((error) => {
+              console.error("Error deleting referral:", error);
+              // Handle error (e.g., show an error message)
+            });
+        }
+      };
+
+      const saveReferralStatus = () => {
+        // Assuming the server expects a simple JSON with { status: "NewStatus" }
+        const updatedReferral = { status: selectedReferralStatus };
+        
+        http.put(`/ReferralTracking/UpdateReferralStatus/${selectedUser.id}`, updatedReferral)
+          .then((res) => {
+            console.log(res.data);
+            getReferrals(); // Fetch updated list
+            handleClosePopup(); // Close dialog
+          })
+          .catch(error => {
+            console.error('There was an error updating the referral status:', error.response ? error.response.data : error.message);
+          });
+    };
+    
+
 
   const columns = [
-      { field: 'id', headerName: 'Referral Tracking ID', width: 100, cellClassName: 'name-column--cell' },
+      { field: 'id', headerName: 'Referral ID', width: 100, cellClassName: 'name-column--cell' },
       { field: 'referredUsername', headerName: 'Referred Username', width: 120 },
-      { field: 'referringUsername', headerName: 'Referred By Username', width: 120 },
+      { field: 'referringUsername', headerName: 'Referred By Username', width: 150 },
       { field: 'dateFulfilled', headerName: 'Date Fufilled', width: 120 },
       {
           field: 'status',
@@ -111,21 +146,6 @@ function ReferralTracking() {{
                       statusStyle.border = '2px solid #0288d1';
                       statusIcon = <InfoIcon sx={{ mr: 1 }} />;
                       break;
-                  case 'Late':
-                      statusStyle.color = '#e74c3c';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <WarningIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Past':
-                      statusStyle.color = '#95a5a6';
-                      statusStyle.border = '2px solid #ccc';
-                      statusIcon = <AssignmentTurnedInIcon sx={{ mr: 1 }} />;
-                      break;
-                  case 'Cancelled': // Add this case
-                      statusStyle.color = '#f44336';
-                      statusStyle.border = '2px solid #d32f2f';
-                      statusIcon = <CancelIcon sx={{ mr: 1 }} />;
-                      break;
                   default:
                       break;
               }
@@ -141,7 +161,7 @@ function ReferralTracking() {{
       {
           field: 'manage',
           headerName: 'Manage',
-          width: 120,
+          width: 100,
           sortable: false,
           filterable: false,
           renderCell: (params) => (
@@ -165,7 +185,7 @@ function ReferralTracking() {{
       {
           field: 'cancel',
           headerName: 'Cancel',
-          width: 120,
+          width: 100,
           sortable: false,
           filterable: false,
           renderCell: (params) => (
@@ -270,45 +290,54 @@ console.log("Rows:", rows); // Log the generated rows to the console
                       </DataGrid>
                   </Box>
 
-
-                  {/* 
-<Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
-    <DialogTitle>Referral Details</DialogTitle>
+                  <Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
+    <DialogTitle><strong>User Details</strong></DialogTitle>
     <DialogContent>
-        {ReferralTracking && (
+        {selectedUser && (
             <Box>
-                <Typography>
-                    Referred Username: {referralTracking.user?.username}
-                </Typography>
-
-                <Typography>
-                    Referred Email: {referralTracking.user?.Email}
-                </Typography>
-                <Typography>
-                    Date Fufilled: {dayjs(referralTracking.user?.CreatedAt).format('D MMM YYYY')}
-                </Typography>
+                <Typography><strong>Referral ID:</strong> {selectedUser.id}</Typography>
+                <Typography><strong>Reffered Username:</strong> {selectedUser.referredUsername} {selectedUser.lastName}</Typography>
+                <Typography><strong>Reffered Username:</strong> @{selectedUser.referringUsername}</Typography>
+                <Typography><strong>Date Fufilled:</strong> {selectedUser.dateFulfilled}</Typography>
+                <Typography><strong>Points Earned:</strong> {selectedUser.points}</Typography>
+                <Typography><strong>Status:</strong> {selectedUser.status}</Typography>
+                <FormControl fullWidth margin="normal">
+                                <InputLabel>Status</InputLabel>
+                                <Select
+                                    value={selectedReferralStatus}
+                                    onChange={(event) => setSelectedReferralStatus(event.target.value)}
+                                >
+                                    <MenuItem value="Pending">Pending</MenuItem>
+                                    <MenuItem value="Approved">Approved</MenuItem>
+                                    <MenuItem value="Not approved">Not Approved</MenuItem>
+                                    
+                                </Select>
+                                <Button variant="contained" color="primary" onClick={saveReferralStatus} sx={{ mt: 2 }}>
+                                    Save
+                                </Button>
+                            </FormControl>
+                
             </Box>
         )}
-        <FormControl fullWidth margin="normal">
-            <InputLabel>Status</InputLabel>
-            <Select
-                value={selectedRentalStatus}
-                onChange={(event) => setSelectedRentalStatus(event.target.value)}
-            >
-                <MenuItem value="Pending">Pending</MenuItem>
-                <MenuItem value="Approved">Approved</MenuItem>
-                <MenuItem value="Not approved">Not Approved</MenuItem>
-            </Select>
-            <Button variant="contained" color="primary" onClick={saveRentalStatus} sx={{ mt: 2 }}>
-                Save
-            </Button>
-        </FormControl>
     </DialogContent>
     <DialogActions sx={{ padding: '20px' }}>
         <Button variant="contained" onClick={handleClosePopup}>Close</Button>
     </DialogActions>
 </Dialog>
-*/}
+
+<Dialog open={openCancelDialog} onClose={() => setOpenCancelDialog(false)}>
+      <DialogTitle>Confirm Delete</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Are you sure you want to delete this referral?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenCancelDialog(false)}>Cancel</Button>
+        <Button onClick={handleDeleteReferral} color="error">Delete</Button> {/* Now calling the delete function */}
+      </DialogActions>
+    </Dialog>
+
 
               </Box>
 

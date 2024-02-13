@@ -128,7 +128,7 @@ function EditPost() {
     >
       <Typography
         variant="h2"
-        sx={{ my: 3, borderBottom: "3px solid  #c17914", paddingBottom: "7px" }}
+        sx={{ my: 3, borderBottom: "3px solid  #c17914", paddingBottom: "7px", color: 'red' }}
       >
         <strong>Edit Post</strong>
       </Typography>

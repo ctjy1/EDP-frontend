@@ -16,25 +16,7 @@ const RedirectHandler = () => {
 console.log(decoded); // Check the structure of the decoded token
 
         setUserRole(decoded.UserRole); // Assuming the role is stored in the token
-        /*setUser({ 
-          id: decoded.nameid,
-          firstName: decoded.given_name,
-          lastName: decoded.family_name,
-          username: decoded.name,
-          email: decoded.email,
-          contactNumber: decoded.Contact,
-          address1: decoded.Address1,
-          address2: decoded.Address2,
-          referralCode: decoded.ReferralCode        
-        }); 
-        */
-        // Update this line based on your token's structure
 
-        // Redirect based on user role
-        if (decoded.userRole === 'superAdmin') {
-          navigate('/adminHome');
-        }
-        // You can add more role-based redirects here
       } catch (error) {
         console.error("Error decoding token:", error);
       }
