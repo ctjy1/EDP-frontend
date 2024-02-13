@@ -66,7 +66,7 @@ function Gallery() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
     <Box>
       <Typography variant="h1" sx={{ my: 4, textAlign: "center", color: 'red', paddingBottom: "7px",}}>
         <strong>Community Post</strong>

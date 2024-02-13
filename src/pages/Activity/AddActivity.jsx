@@ -58,7 +58,7 @@ function AddActivity() {
   return (
       <Box sx={{ minHeight: '100vh', padding: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color: 'red' }}>
-                <strong>Add Cart</strong>
+                <strong>Add Activity</strong>
             </Typography>
 
             <Box
