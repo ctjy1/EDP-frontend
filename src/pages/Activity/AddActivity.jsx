@@ -4,6 +4,8 @@ import {
   Typography,
   TextField,
   Button,
+  Grid,
+  FormControl, InputLabel, FormHelperText, Select, MenuItem
 } from "@mui/material";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +13,7 @@ import * as yup from "yup";
 import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NavBar from "../Components/Navbar";
+// import NavBar from "../Components/Navbar";
 
 function AddActivity() {
   const navigate = useNavigate();

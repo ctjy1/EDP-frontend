@@ -22,7 +22,7 @@ import http from "../../http";
 import dayjs from "dayjs";
 import UserContext from "../../contexts/UserContext";
 import global from "../../global";
-import NavBar from "../Components/Navbar"
+// import NavBar from "../Components/Navbar"
 
 function Gallery() {
   const [galleryList, setGalleryList] = useState([]);

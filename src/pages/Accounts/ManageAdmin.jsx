@@ -9,83 +9,106 @@ import { FormControl, InputLabel, Select, MenuItem, } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Header from "../../components/Header";
-import ActivityContext from "../../contexts/ActivityContext";
+import UserContext from "../../contexts/UserContext";
 import http from "../../http";
-import AccountSidebar from "../Accounts/global/AccountSidebar";
+import AccountSidebar from "./global/AccountSidebar";
 
-function ManageActivitys() {{
+function ManageAdmin() {{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [ActivityList, setActivityList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [search, setSearch] = useState("");
-  const { activity } = useContext(ActivityContext);
+  const { user } = useContext(UserContext);
+  const [selectedUser, setSelectedUser] = useState(null); // New state for popup user details
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedUserForDeletion, setSelectedUserForDeletion] = useState(null);
+
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
-  const getActivitys = () => {
-    http.get("/Activity").then((res) => {
-      setActivityList(res.data);
+
+  const getUsers = () => {
+    http.get("/User/admins").then((res) => {
+      setUserList(res.data);
     }).catch((error) => {
-        console.log("Error fetching activity details:", error);
+        console.log("Error fetching user details:", error);
       })
   };
 
-  const searchActivitys = () => {
-    http.get(`/Activitys?search=${search}`).then((res) => {
-        setActivityList(res.data);
+  const searchUsers = () => {
+    http.get(`/Users/?search=${search}`).then((res) => {
+        setUserList(res.data);
     });
   };
 
+  const deleteUser = () => {
+    if (selectedUserForDeletion && selectedUserForDeletion.id) {
+      http.delete(`/User/${selectedUserForDeletion.id}`)
+        .then(() => {
+          setOpenCancelDialog(false); // Close the dialog
+          getUsers(); // Refresh the user list
+        })
+        .catch((error) => {
+          console.error("Error deleting user:", error);
+          // Optionally handle errors, such as displaying a notification
+        });
+    }
+  };
+  
+
   useEffect(() => {
-    getActivitys();
+    getUsers();
   }, []);
 
   const onSearchKeyDown = (e) => {
     if (e.key === "Enter") {
-        searchActivitys();
+        searchUsers();
     }
   };
 
   const onClickSearch = () => {
-    searchActivitys();
+    searchUsers();
   };
 
   const onClickClear = () => {
     setSearch("");
-    getActivitys();
+    getUsers();
   };
 
-  const [openPopup, setOpenPopup] = useState(false);
+ 
     const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
-    const handleOpenPopup = (id) => {
-      http.get(`/Activity/${id}`)
-        .then((res) => {
-          setActivity(res.data); 
-          setOpenPopup(true);
-        })
-        .catch((error) => {
-          console.error("Error fetching activity details:", error);
-        });
+    const handleOpenPopup = (user) => {
+      setSelectedUser(user); // Set the selected user details
+      setOpenPopup(true);
     };
-    
-
     const handleClosePopup = () => {
         setOpenPopup(false);
     };
 
+    const handleOpenCancelDialog = (user) => {
+      setSelectedUserForDeletion(user);
+      setOpenCancelDialog(true);
+    };
+    
 
     const columns = [
-      { field: 'id', headerName: 'Activity ID', width: 90, cellClassName: 'name-column--cell' },      { field: 'activityname', headerName: 'Activity name', width: 110 },
-
-      { field: 'activityName', headerName: 'Activity Name', width: 120 }, 
-      { field: 'tagId', headerName: 'Tag ID', width: 90 }, 
-      { field: 'tagName', headerName: 'Tag Name', width: 110 }, // Using tag_Name from the model
-      { field: 'activityDesc', headerName: 'Activity Description', width: 150 }, // Using activity_Desc from the model
-      { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
-      // Add more columns if needed
+      { field: 'id', headerName: 'Admin ID', width: 90, cellClassName: 'name-column--cell' },
+      {
+        field: 'name',
+        headerName: 'Name',
+        width: 120,
+        renderCell: (params) => {
+          const { firstName, lastName } = params.row;
+          return `${firstName} ${lastName}`;
+        },
+      },
+      
+      { field: 'email', headerName: 'Email', width: 150 },
+      { field: 'contactNumber', headerName: 'Mobile Number', width: 110 },
+      { field: 'userRole', headerName: 'User Role', width: 150 },
       {
         field: 'manage',
         headerName: 'Manage',
@@ -109,7 +132,7 @@ function ManageActivitys() {{
       },
       {
         field: 'cancel',
-        headerName: 'Cancel',
+        headerName: 'Delete',
         width: 110,
         sortable: false,
         filterable: false,
@@ -125,13 +148,14 @@ function ManageActivitys() {{
       },
     ];
     
-const rows = ActivityList.map((activity, i) => ({
-  id: activity.id,
-  activityName: activity.activity_Name,
-  tagId: activity.tag_Id,
-  tagName: activity.tag_Name,
-  activityDesc: activity.activity_Desc,
-  imageFile: activity.ImageFile,
+const rows = userList.map((user, i) => ({
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    username: user.username,
+    email: user.email,
+    contactNumber: user.contactNumber,
+   userRole: user.userRole
   }));
 
   const [pageSize, setPageSize] = useState(5)
@@ -143,7 +167,7 @@ const rows = ActivityList.map((activity, i) => ({
           <main className="adminContent">
               <Box m="20px">
 
-              <Header title={<span style={{ color: "#fff" }}>MANAGE ACTIVITIES</span>} subtitle={<span style={{ color: "#4cceac" }}>Managing your activities</span>} />
+              <Header title={<span style={{ color: "#fff" }}>MANAGING ADMINSTRATORS</span>} subtitle={<span style={{ color: "#4cceac" }}>Managing our adminstrator accounts</span>} />
 
 
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -208,41 +232,44 @@ const rows = ActivityList.map((activity, i) => ({
                       </DataGrid>
                   </Box>
 
+
                   <Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
-    <DialogTitle>Activity Details</DialogTitle>
+    <DialogTitle><strong>Adminstrators Details</strong></DialogTitle>
     <DialogContent>
-        {activity && (
+        {selectedUser && (
             <Box>
-                <Typography>
-                    <strong>Activity ID:</strong> {activity.id}
-                </Typography>
-
-                <Typography>
-                    <strong>Activity Name:</strong> {activity.activity_Name}
-                </Typography>
-
-                <Typography>
-                    <strong>Tag ID:</strong> {activity.tag_Id}
-                </Typography>
-
-                <Typography>
-                    <strong>Tag Name:</strong> {activity.tag_Name}
-                </Typography>
-
-                <Typography>
-                    <strong>Activity Description:</strong> {activity.activity_Desc}
-                </Typography>
-
-                <Typography>
-                    <strong>Image File:</strong> {activity.ImageFile}
-                </Typography>
+                <Typography><strong>Admin ID:</strong> {selectedUser.id}</Typography>
+                <Typography><strong>Name:</strong> {selectedUser.firstName} {selectedUser.lastName}</Typography>
+                <Typography><strong>Username:</strong> @{selectedUser.username}</Typography>
+                <Typography><strong>Email:</strong> {selectedUser.email}</Typography>
+                <Typography><strong>Phone Number:</strong> {selectedUser.contactNumber}</Typography>
+                <Typography><strong>User Role:</strong> <strong>{selectedUser.userRole}</strong></Typography>
+              
+               
             </Box>
         )}
     </DialogContent>
+
+    
     <DialogActions sx={{ padding: '20px' }}>
         <Button variant="contained" onClick={handleClosePopup}>Close</Button>
     </DialogActions>
 </Dialog>
+
+<Dialog open={openCancelDialog} onClose={() => setOpenCancelDialog(false)}>
+  <DialogTitle>Confirm Delete</DialogTitle>
+  <DialogContent>
+    <DialogContentText>
+      Are you sure you want to delete this adminstrator?
+    </DialogContentText>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setOpenCancelDialog(false)}>Cancel</Button>
+    <Button onClick={deleteUser} color="error">Delete</Button>
+  </DialogActions>
+</Dialog>
+
+
 
 
               </Box>
@@ -252,4 +279,4 @@ const rows = ActivityList.map((activity, i) => ({
   )
 }}
 
-export default ManageActivitys
+export default ManageAdmin

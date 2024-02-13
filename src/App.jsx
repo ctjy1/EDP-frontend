@@ -36,6 +36,11 @@ import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
 
+// Activitys
+import AddActivity from "./pages/Activity/AddActivity";
+import ManageActivities from "./pages/Activity/ManageActivities";
+import SingleActivity from "./pages/Activity/SingleActivity";
+
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
 import http from "./http";
@@ -252,6 +257,9 @@ function App() {
                 <Route path={"/gallery"} element={<Gallery />} />
                 <Route path={"/addgallery"} element={<AddGallery />} />
                 <Route path={"/editpost/:id"} element={<EditPost />} />
+                <Route path={"/addactivity"} element={<AddActivity />} />
+                <Route path={"/manageactivity"} element={<ManageActivities />} />
+                <Route path={"/SingleActivity/:id"} element={<SingleActivity />} />
                 <Route
                   path={"/editUserDetails/:id"}
                   element={<EditUserDetails />}
