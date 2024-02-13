@@ -15,6 +15,7 @@ import { ColorModeContext, useMode } from './themes/MyTheme';
 import UserContext from './contexts/UserContext';
 import * as jwtDecodeModule from 'jwt-decode';
 import Logo from "./assets/Logo.png";
+import http from './http';
 
 // Import pages
 import Gallery from './pages/Accounts/Gallery';
@@ -47,6 +48,7 @@ import UserOrders from './pages/Bookings/UserOrders';
 import SetBudget from './pages/Bookings/SetBudget';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from './RedirectHandler';
 import LogoutButton from './LogoutButton';
@@ -55,6 +57,14 @@ function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      http.get('/user/auth').then((res) => {
+        setUser(res.data.user);
+      });
+    }
+  }, []);
 
   const logout = () => {
     localStorage.clear();
@@ -116,7 +126,7 @@ function App() {
                     <Typography
                       variant="h6"
                       component="div"
-                      
+
                     >
                       <img src={Logo} alt="" />
                     </Typography>
@@ -150,7 +160,7 @@ function App() {
                         <Link to="/setbudget" style={linkStyle}><Typography>Set Budget</Typography></Link>
                         <Link to="/userorders" style={linkStyle}><Typography>My Orders</Typography></Link>
 
-                        <Link to="/checkout"><ShoppingCartIcon sx={{color: 'black'}}/></Link>
+                        <Link to="/checkout"><ShoppingCartIcon sx={{ color: 'black' }} /></Link>
                       </>
                     )}
                     {userRole === "Account Manager" && (
@@ -214,7 +224,7 @@ function App() {
                           <strong>@{user.username}</strong>
                         </Typography>
                       </Link>
-                      <LogoutButton/>
+                      <LogoutButton />
                     </>
                   ) : (
                     <>
