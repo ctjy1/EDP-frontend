@@ -12,6 +12,7 @@ import Header from "../../components/Header";
 import ActivityContext from "../../contexts/ActivityContext";
 import http from "../../http";
 import AccountSidebar from "../Accounts/global/AccountSidebar";
+import { useNavigate } from "react-router-dom";
 
 function ManageActivitys() {{
   const theme = useTheme();
@@ -19,6 +20,8 @@ function ManageActivitys() {{
   const [ActivityList, setActivityList] = useState([]);
   const [search, setSearch] = useState("");
   const { activity } = useContext(ActivityContext);
+  const navigate = useNavigate();
+
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -84,7 +87,7 @@ function ManageActivitys() {{
       { field: 'tagId', headerName: 'Tag ID', width: 90 }, 
       { field: 'tagName', headerName: 'Tag Name', width: 110 }, // Using tag_Name from the model
       { field: 'activityDesc', headerName: 'Activity Description', width: 150 }, // Using activity_Desc from the model
-      { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
+      // { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
       // Add more columns if needed
       {
         field: 'manage',
@@ -131,7 +134,7 @@ const rows = ActivityList.map((activity, i) => ({
   tagId: activity.tag_Id,
   tagName: activity.tag_Name,
   activityDesc: activity.activity_Desc,
-  imageFile: activity.ImageFile,
+  // imageFile: activity.ImageFile,
   }));
 
   const [pageSize, setPageSize] = useState(5)
@@ -163,6 +166,20 @@ const rows = ActivityList.map((activity, i) => ({
           <Clear />
         </IconButton>
                   </Box>
+                  <Button variant="contained"
+                                sx={{
+                                    width: '200px',
+                                    backgroundColor: '#fe9e0d',
+                                    padding: "0.6rem 0rem",
+                                    outline: "none",
+                                    border: "none",
+                                    color: '#FFFFFF',
+                                    cursor: "pointer",
+                                    fontWeight: 600,
+                                    transition: "0.2s",
+                                }} onClick={() => navigate("/AddActivity")}>
+                                Add Activity
+                            </Button>
 
                   <Box
                       height='75vh'
@@ -232,10 +249,10 @@ const rows = ActivityList.map((activity, i) => ({
                 <Typography>
                     <strong>Activity Description:</strong> {activity.activity_Desc}
                 </Typography>
-
+{/* 
                 <Typography>
                     <strong>Image File:</strong> {activity.ImageFile}
-                </Typography>
+                </Typography> */}
             </Box>
         )}
     </DialogContent>

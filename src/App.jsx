@@ -199,13 +199,13 @@ function App() {
                         <Typography>Bookings</Typography>
                       </Link>
                       <Link
-                        to="/manageRewards"
+                        to="/manageactivities"
                         style={linkStyle}
                       >
                         <Typography>Activities</Typography>
                       </Link>
                       <Link
-                        to="/activities"
+                        to="/managerewards"
                         style={linkStyle}
                       >
                         <Typography>Feedbacks</Typography>
@@ -258,7 +258,7 @@ function App() {
                 <Route path={"/addgallery"} element={<AddGallery />} />
                 <Route path={"/editpost/:id"} element={<EditPost />} />
                 <Route path={"/addactivity"} element={<AddActivity />} />
-                <Route path={"/manageactivity"} element={<ManageActivities />} />
+                <Route path={"/manageactivities"} element={<ManageActivities />} />
                 <Route path={"/SingleActivity/:id"} element={<SingleActivity />} />
                 <Route
                   path={"/editUserDetails/:id"}
