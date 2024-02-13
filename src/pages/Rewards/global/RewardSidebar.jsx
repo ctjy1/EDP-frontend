@@ -147,6 +147,13 @@ const RewardSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Reward Insights
+            </Typography>
             <Item
               to="/rewardData"
               title="Reward Analytics"
@@ -154,6 +161,7 @@ const RewardSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            
             <Typography
               variant="h6"
               color={colors.grey[300]}

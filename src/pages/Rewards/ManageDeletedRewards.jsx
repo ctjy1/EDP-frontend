@@ -15,7 +15,7 @@ import RewardSidebar from "./global/RewardSidebar";
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-function ManageRewards() {
+function ManageDeletedRewards() {
   {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -30,7 +30,8 @@ function ManageRewards() {
 
     const getRewards = () => {
       http.get('/reward').then((res) => {
-        setRewardList(res.data);
+        const deletedRewards = res.data.filter(reward => reward.deletedAt !== null);
+        setRewardList(deletedRewards);
       });
     };
 
@@ -128,7 +129,7 @@ function ManageRewards() {
       columns.push(
         { field: 'redeemedAt', headerName: 'Redeemed At', width: 120 },
         { field: 'redeemedBy', headerName: 'Redeemed By', width: 120 },
-        { field: 'usedAt', headerName: 'Used At', width: 120 },
+        { field: 'deletedAt', headerName: 'Deleted At', width: 120 }
       );
     }
     
@@ -172,8 +173,8 @@ function ManageRewards() {
         <main className="adminContent">
           <Box m="20px">
 
-            <Header title={<span style={{ color: "#fff" }}>MANAGING ACTIVE REWARDS</span>} 
-            subtitle={<span style={{ color: "#4cceac" }}>Active Rewards</span>} />
+            <Header title={<span style={{ color: "#fff" }}>MANAGING DELETED REWARDS</span>} 
+            subtitle={<span style={{ color: "#4cceac" }}>Deleted Rewards</span>} />
 
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2}}>
@@ -312,4 +313,4 @@ function ManageRewards() {
   }
 }
 
-export default ManageRewards;
+export default ManageDeletedRewards;

@@ -15,7 +15,7 @@ import RewardSidebar from "./global/RewardSidebar";
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-function ManageRewards() {
+function ManageExpiredRewards() {
   {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -30,7 +30,11 @@ function ManageRewards() {
 
     const getRewards = () => {
       http.get('/reward').then((res) => {
-        setRewardList(res.data);
+        const expiredRewards = res.data.filter(reward => {
+          const expiryDate = new Date(reward.expiryDate);
+          return expiryDate < new Date(); // Check if expiryDate is in the past
+        });
+        setRewardList(expiredRewards);
       });
     };
 
@@ -128,7 +132,7 @@ function ManageRewards() {
       columns.push(
         { field: 'redeemedAt', headerName: 'Redeemed At', width: 120 },
         { field: 'redeemedBy', headerName: 'Redeemed By', width: 120 },
-        { field: 'usedAt', headerName: 'Used At', width: 120 },
+        { field: 'deletedAt', headerName: 'Deleted At', width: 120 }
       );
     }
     
@@ -312,4 +316,4 @@ function ManageRewards() {
   }
 }
 
-export default ManageRewards;
+export default ManageExpiredRewards;

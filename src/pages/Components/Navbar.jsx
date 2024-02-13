@@ -69,7 +69,7 @@ const Navbar = () => {
         console.error("Error decoding token:", error);
       }
     }
-  }, [userRole, navigate]); // Adjust the dependency array
+  }, [userRole, setUser, navigate]); // Adjust the dependency array
 
   console.log("UserRole:", user?.UserRole);
   
