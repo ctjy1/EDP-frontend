@@ -40,10 +40,10 @@ function Login() {
           localStorage.setItem("accessToken", res.data.accessToken);
           setUser(res.data.user);
           const userRole = res.data.user.userRole;
-      if (userRole === 'Super Administrator' || userRole === 'Account Manager' || userRole === "Bookings Manager" || userRole === "Rewards Manager" || userRole === "Feedback Manager") {
+      if (userRole === 'Super Adminstrator' || userRole === 'Account Manager' || userRole === "Bookings Manager" || userRole === "Rewards Manager" || userRole === "Feedback Manager") {
         navigate("/adminHome");
       } else if (userRole === 'user') {
-        navigate("/");
+        navigate("/userHome");
       }
     })
         .catch(function (err) {
