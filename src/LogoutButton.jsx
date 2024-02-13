@@ -15,7 +15,20 @@ const LogoutButton = () => {
     navigate('/');
   };
 
-  return <Button onClick={logout} color="inherit">Logout</Button>;
+  return (
+    <Button
+      onClick={logout}
+      sx={{
+        backgroundColor: 'red',
+        color: 'black',
+        '&:hover': {
+          backgroundColor: 'darkorange', // Change color on hover if desired
+        },
+      }}
+    >
+      <strong>Logout</strong>
+    </Button>
+  );
 };
 
 export default LogoutButton;

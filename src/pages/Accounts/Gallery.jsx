@@ -22,7 +22,6 @@ import http from "../../http";
 import dayjs from "dayjs";
 import UserContext from "../../contexts/UserContext";
 import global from "../../global";
-import NavBar from "../Components/Navbar"
 
 function Gallery() {
   const [galleryList, setGalleryList] = useState([]);
@@ -68,7 +67,6 @@ function Gallery() {
 
   return (
     <>
-      <NavBar />
     <Box>
       <Typography variant="h1" sx={{ my: 4, textAlign: "center", color: 'red', paddingBottom: "7px",}}>
         <strong>Community Post</strong>
@@ -119,7 +117,7 @@ function Gallery() {
                     <Typography variant="h3" sx={{ flexGrow: 1 }}>
                       <strong>{gallery.title}</strong>
                     </Typography>
-                    {user && user.id === gallery.userId && (
+                    {user && Number(user.id) === Number(gallery.userId) && (
                       <Link to={`/editpost/${gallery.id}`}>
                         <IconButton color="white" sx={{ padding: "4px" }}>
                           <Edit />

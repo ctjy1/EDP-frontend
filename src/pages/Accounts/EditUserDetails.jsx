@@ -90,10 +90,18 @@ function EditUserDetails() {
   }
 
   return (
-    <Box sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid #c17914", paddingBottom: "7px" }}>
+    <Box sx={{ minHeight: '100vh', padding: '15px', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
+    <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color: 'red' }}>
         <strong>Edit User Details</strong>
-      </Typography>
+    </Typography>
+    <Box
+        border="1px solid #ccc"
+        borderRadius="8px"
+        p={4}
+        mx="auto"
+        maxWidth="600px"
+        mt={3}
+    >
 
       <Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: "900px", alignItems: "center", justifyContent: "center" }}>
         <Grid container spacing={3}>
@@ -294,6 +302,7 @@ function EditUserDetails() {
             Delete
           </Button>
         </Box>
+      </Box>
       </Box>
 
       <Dialog open={open} onClose={handleClose}>

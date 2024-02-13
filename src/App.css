@@ -50,26 +50,30 @@ body,
 }
 
 .AppBar a {
-  color: inherit;
+  color: black;
   text-decoration: none;
   margin-right: 16px;
   }
   .AppBar a:hover {
-  color: lightblue;
+  color: red;
   }
   .AppBar button {
     color: inherit;
     margin-left: 12px;
     }
     .AppBar button:hover {
-    color: lightblue;
+    color: black;
     }
     body {
       background-color: #f6f6f6;
     }
-    
+    .homeNavbar{
+    display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 90px;
+    }
     nav {
-      display: flex;
       align-items: center;
       justify-content: space-between;
       min-height: 90px;
@@ -495,12 +499,18 @@ body,
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      min-height: 80vh;
+    }
+    .App2{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
     }
     .wrapper{
       width: 100%;
       max-width: 500px;
-      padding: 30px 30px;
+      padding: 15px 15px;
       background: #4c94cf;
       border-radius: 20px;
       box-shadow: 0 4px 4px rgba(0,0,0,0.4);
@@ -616,4 +626,37 @@ body,
     }
     .chatbot-toggler span:last-child{
       opacity: 0;
+    }
+    .chat-container {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin: 20px;
+    }
+    
+    .hide {
+      display: none;
+    }
+    .chat-icon {
+      cursor: pointer;
+      position: fixed;
+      bottom: 20px; /* Adjust as needed */
+      right: 20px; /* Adjust as needed */
+      z-index: 1000; /* Ensure it's above other content */
+    }
+    
+    .close-btn {
+      font-size: 20px; /* Adjust size as needed */
+      position: fixed;
+      bottom: 10px; /* Positioned slightly above the chatbox */
+      right: 35px; /* Adjust to make it visually connected to the toggler */
+      z-index: 1002; /* Ensure it's above the toggler */
+    }
+    
+    .App1 {
+      position: fixed;
+      bottom: 12px;
+      right: 20px;
+      z-index: 1001; /* Ensure proper layering */
+      /* Adjust dimensions as needed */
     }

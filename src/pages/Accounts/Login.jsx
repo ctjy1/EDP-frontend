@@ -7,7 +7,6 @@ import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../contexts/UserContext";
-import NavBar from "../Components/Navbar"
 
 function Login() {
   const navigate = useNavigate();
@@ -40,8 +39,13 @@ function Login() {
         .then((res) => {
           localStorage.setItem("accessToken", res.data.accessToken);
           setUser(res.data.user);
-          navigate("/");
-        })
+          const userRole = res.data.user.userRole;
+      if (userRole === 'Super Administrator' || userRole === 'Account Manager' || userRole === "Bookings Manager" || userRole === "Rewards Manager" || userRole === "Feedback Manager") {
+        navigate("/adminHome");
+      } else if (userRole === 'user') {
+        navigate("/");
+      }
+    })
         .catch(function (err) {
           toast.error(`${err.response.data.message}`);
         });
@@ -55,10 +59,10 @@ function Login() {
 
   return (
     <>
-    {/*<NavBar /> */}
+
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 3,
         display: "flex",
         flexDirection: "column",
         alignItems: "center"

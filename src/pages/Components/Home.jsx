@@ -1,13 +1,12 @@
 import React from "react";
 import BannerBackground from "../../assets/home-banner-background.png";
 import BannerImage from "../../assets/home-banner-image.jpeg"; 
-import Navbar from "./Navbar";
 import { FiArrowRight } from "react-icons/fi";
 
 const Home = () => {
   return (
     <div className="home-container">
-      {/*<Navbar />*/}
+
       <div className="home-banner-container">
        
         <div className="home-text-section">
