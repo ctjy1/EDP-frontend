@@ -18,8 +18,6 @@ import { Clear } from '@mui/icons-material';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import http from "../../http";
 import SearchIcon from "@mui/icons-material/Search";
-import UserContext from '../../contexts/UserContext';
-import Navbar from '../Components/Navbar';
 import { ColorModeContext, useMode } from '../../themes/MyTheme';
 import Divider from '@mui/material/Divider';
 import CustomProgressBar from './RewardComponents/CustomProgressBar';
