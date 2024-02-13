@@ -113,29 +113,29 @@ function ManageRewards() {
 
 
     const columns = [
-      { field: 'rewardName', headerName: 'Reward Name', width: 120 },
-      { field: 'pointsRequired', headerName: 'Points Required', width: 120 },
-      { field: 'expiryDate', headerName: 'Expiry Date', width: 120 },
-      { field: 'discount', headerName: 'Discount', width: 100 },
-      { field: 'description', headerName: 'Description', width: 180 }
+      { field: 'rewardName', headerName: 'Reward Name', width: 100 },
+      { field: 'pointsRequired', headerName: 'Points Required', width: 90 },
+      { field: 'expiryDate', headerName: 'Expiry Date', width: 100 },
+      { field: 'discount', headerName: 'Discount', width: 60 },
+      { field: 'description', headerName: 'Description', width: 160 }
     ];
 
     if (isGrouped) {
-      columns.push({ field: 'quantity', headerName: 'Quantity', width: 90 });
+      columns.push({ field: 'quantity', headerName: 'Quantity', width: 70 });
     }
     
     if (!isGrouped) {
       columns.push(
-        { field: 'redeemedAt', headerName: 'Redeemed At', width: 120 },
-        { field: 'redeemedBy', headerName: 'Redeemed By', width: 120 },
-        { field: 'usedAt', headerName: 'Used At', width: 120 },
+        { field: 'redeemedAt', headerName: 'Redeemed At', width: 100 },
+        { field: 'redeemedBy', headerName: 'Redeemed By', width: 100 },
+        { field: 'usedAt', headerName: 'Used At', width: 100 },
       );
     }
     
     columns.push({
       field: "manage",
       headerName: "Manage",
-      flex: 1,
+      width: 90,
       renderCell: (params) => (
         <Link to={!isGrouped ? `/editReward/${params.row.id}` : `/manageMoreRewards/${params.row.id}`}>
           <Button
