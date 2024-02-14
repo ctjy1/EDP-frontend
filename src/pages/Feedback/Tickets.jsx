@@ -16,8 +16,8 @@ import {
 } from '@mui/material';
 import { AccessTime, Search, Clear } from '@mui/icons-material';
 import dayjs from 'dayjs';
-import global from '../../global';
-import http from '../../http';
+import global from '../global';
+import http from '../http';
 function Ticket() {
   const [ticketList, setTicketList] = useState([]);
   const [search, setSearch] = useState('');
