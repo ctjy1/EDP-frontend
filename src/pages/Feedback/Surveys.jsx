@@ -4,7 +4,7 @@ import { AccessTime, Search, Clear } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import global from '../../global';
 import http from '../../http';
-
+import { DataGrid } from '@mui/x-data-grid';
 
 function Surveys() {
     const [surveyList, setSurveyList] = useState([]);
@@ -45,6 +45,16 @@ function Surveys() {
             setSurveyList(res.data);
         });
     }, []);
+
+    const columns = [
+        { field: 'id', headerName: 'Survey ID', width: 130 },
+        { field: 'satisfaction', headerName: 'Rating', width: 130 },
+        { field: 'ease', headerName: 'Ease', width: 130 },
+        { field: 'booking', headerName: 'Booking', width: 130 },
+        { field: 'comments', headerName: 'Comments', width: 200 },
+        { field: 'createdAt', headerName: 'Submitted on', width: 180, renderCell: (params) => dayjs(params.value).format(global.datetimeFormat) },
+    ];
+
     return (
         <Box>
             <Typography variant="h5" sx={{ my: 2 }}>
@@ -65,47 +75,18 @@ function Surveys() {
                 </IconButton>
             </Box>
 
-
-            <Grid container spacing={2}>
-                {
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">User ID</TableCell>
-                                    <TableCell align="center">Survey ID</TableCell>
-                                    <TableCell align="center">Rating</TableCell>
-                                    <TableCell align="center">Ease</TableCell>
-                                    <TableCell align="center">Booking</TableCell>
-                                    <TableCell align="center">Comments</TableCell>
-                                    <TableCell align="center">Submitted on</TableCell>
-                                </TableRow>
-                            </TableHead>
-
-                            <TableBody>
-                                {surveyList.map((survey, i) => (
-                                    <TableRow key={survey.id}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell align="center"></TableCell>
-                                        <TableCell align="center">{survey.id}</TableCell>
-                                        <TableCell align="center">{survey.satisfaction}</TableCell>
-                                        <TableCell align="center">{survey.ease}</TableCell>
-                                        <TableCell align="center">{survey.booking}</TableCell>
-                                        <TableCell align="center">{survey.comments}</TableCell>
-                                        <TableCell align="center"> {dayjs(survey.createdAt).format(global.datetimeFormat)}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                }
-            </Grid>
-
-
-
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={surveyList}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5, 10, 20]}
+                    checkboxSelection
+                    disableSelectionOnClick
+                />
+            </div>
         </Box>
-    )
+    );
 }
 
-export default Surveys
+export default Surveys;
