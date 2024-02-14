@@ -3,9 +3,9 @@ import { Box, Typography, TextField, Button, Select, MenuItem, InputLabel, FormC
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import http from '../http';
+import http from '../../http';
 
-import ticketImage from '/images/ticket.png';
+import ticketImage from '../images/ticket.png';
 
 
 function AddTicket() {

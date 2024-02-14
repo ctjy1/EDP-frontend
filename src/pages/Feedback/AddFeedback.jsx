@@ -3,10 +3,10 @@ import { Box, Typography, TextField, Button, Snackbar, SnackbarContent, Select, 
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import http from '../http';
+import http from '../../http';
 
 
-import contactUsImage from '/images/ada.jpg';
+// import contactUsImage from '../images/ada.jpg';
 
 function AddFeedback() {
     const navigate = useNavigate();
@@ -63,10 +63,10 @@ function AddFeedback() {
 
     return (
         <Box sx={{ minHeight: '100vh', padding: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px"}}>
+            <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color:'red'}}>
                 <strong>Feedback Form</strong>
             </Typography>
-            <div style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto', color: 'black' }}>
                 <h2>Contact Information</h2>
                 <h3>Address</h3>
 
@@ -79,14 +79,18 @@ function AddFeedback() {
             </div>
 
             <Box sx={{ mx: 'auto', width: 700, border: '1px solid #ccc', padding: 4, borderRadius: 4 }}>
-                <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ my: 2, textAlign: 'center', color: 'black'}}>
                     <b>Give us your feedback!</b>
                 </Typography>
                 <Box component="form" onSubmit={formik.handleSubmit}>
 
                     <FormControl fullWidth sx={{ mb: 2 }}>
+                        
                         <InputLabel htmlFor="feedback_Type">What can we help you with?</InputLabel>
+                   
+                    
                         <Select
+                        sx= {{backgroundColor: "#fdcda9"}}
                             label="Feedback Type"
                             name="feedback_Type"
                             value={formik.values.feedback_Type || ''}  // Ensure it's not undefined
@@ -102,6 +106,8 @@ function AddFeedback() {
                     </FormControl>
 
                     <TextField
+                    
+                    sx= {{backgroundColor: "#fdcda9"}}
                         fullWidth margin="dense" autoComplete="off"
                         label="Subject"
                         name="enquiry_Subject"
@@ -112,6 +118,7 @@ function AddFeedback() {
                         helperText={formik.touched.enquiry_Subject && formik.errors.enquiry_Subject}
                     />
                     <TextField
+                    sx= {{backgroundColor: "#fdcda9"}}
                         fullWidth margin="dense" autoComplete="off"
                         multiline minRows={2}
                         label="General Enquiries / Feedback"
@@ -125,6 +132,8 @@ function AddFeedback() {
 
                     {showComplimentsField && (
                         <TextField
+                        TextField
+                    sx= {{backgroundColor: "#fdcda9"}}
                             fullWidth margin="dense" autoComplete="off"
                             label="Compliments"
                             name="compliments_Desc"

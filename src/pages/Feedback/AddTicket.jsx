@@ -3,9 +3,9 @@ import { Box, Typography, TextField, Button, Select, MenuItem, InputLabel, FormC
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import http from '../http';
+import http from '../../http';
 
-import ticketImage from '/images/ticket.png';
+//import ticketImage from '../images/ticket.png';
 
 
 function AddTicket() {
@@ -47,7 +47,7 @@ function AddTicket() {
     return (<Box>
         <Box
             sx={{
-                backgroundImage: `url(${ticketImage})`,
+                //backgroundImage: `url(${ticketImage})`,
                 backgroundSize: 'cover',
                 height: '390px', // Adjust the height as needed
                 color: 'white',
@@ -57,18 +57,19 @@ function AddTicket() {
                 justifyContent: 'center',
 
             }}>
-            <Typography variant="h3" sx={{ my: 2, textAlign: 'center' }}>
+            <Typography variant="h3" sx={{ my: 2, textAlign: 'center', color: 'black'}}>
                 <b>Ticket Issue Form</b>
             </Typography>
         </Box>
 
         <Box sx={{ mx: 'auto', width: 700, border: '1px solid #ccc', padding: 4, borderRadius: 4 }}>
-            <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ my: 2, textAlign: 'center', color: 'black' }}>
                 <b>Submit Issue</b>
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
 
                 <TextField
+                sx={{ backgroundColor: "#fdcda9" }}
                     fullWidth margin="dense" autoComplete="off"
                     label="Issue" 
                     name="issue"
@@ -79,6 +80,7 @@ function AddTicket() {
                     helperText={formik.touched.issue && formik.errors.issue}
                 />
                 <TextField
+                sx={{ backgroundColor: "#fdcda9" }}
                     fullWidth margin="dense" autoComplete="off"
                     multiline minRows={2}
                     label="Issue Description"

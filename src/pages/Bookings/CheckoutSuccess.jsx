@@ -11,7 +11,7 @@ function CheckoutSuccess() {
     useEffect(() => {
         localStorage.removeItem('rewardData');
 
-        http.post("/cart/confirm-checkout", {rewardData})
+        http.post("/cart/confirm-checkout")
     }, []);
 
     return (
