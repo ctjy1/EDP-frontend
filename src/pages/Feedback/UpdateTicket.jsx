@@ -8,13 +8,13 @@ import http from '../http';
 import ticketImage from '/images/ticket.png';
 
 
-function AddTicket() {
+function UpdateTicket() {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             issue: '', 
             issue_Description: '',
-            issue_Status: 'Ongoing' 
+            issue_Status: '' 
         },
         validationSchema: yup.object({
             issue: yup.string().trim()
@@ -102,4 +102,4 @@ function AddTicket() {
         </Box>
     </Box>)
 }
-export default AddTicket
+export default UpdateTicket
