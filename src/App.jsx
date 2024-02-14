@@ -35,6 +35,7 @@ import ReferralPage from "./pages/Accounts/ReferralPage";
 import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
+import EditActivity from "./pages/Activity/EditActivity";
 
 // Activitys
 import AddActivity from "./pages/Activity/AddActivity";
@@ -260,6 +261,9 @@ function App() {
                 <Route path={"/addactivity"} element={<AddActivity />} />
                 <Route path={"/manageactivities"} element={<ManageActivities />} />
                 <Route path={"/SingleActivity/:id"} element={<SingleActivity />} />
+                <Route path={"/EditActivity/:id"} element={<EditActivity />} />
+                
+                
                 <Route
                   path={"/editUserDetails/:id"}
                   element={<EditUserDetails />}

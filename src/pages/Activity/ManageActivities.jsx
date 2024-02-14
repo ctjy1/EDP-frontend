@@ -19,6 +19,7 @@ function ManageActivitys() {{
   const colors = tokens(theme.palette.mode);
   const [ActivityList, setActivityList] = useState([]);
   const [search, setSearch] = useState("");
+  
   const { activity } = useContext(ActivityContext);
   const navigate = useNavigate();
 
@@ -33,6 +34,16 @@ function ManageActivitys() {{
     }).catch((error) => {
         console.log("Error fetching activity details:", error);
       })
+  };
+
+  const onClick = (id) => {
+    http.get(`/Activity/${id}`)
+        .then((res) => {
+          setOpenPopup(true);
+        })
+        .catch((error) => {
+          console.error("Error fetching activity details:", error);
+        });
   };
 
   const searchActivitys = () => {
@@ -66,28 +77,47 @@ function ManageActivitys() {{
     const handleOpenPopup = (id) => {
       http.get(`/Activity/${id}`)
         .then((res) => {
-          setActivity(res.data); 
           setOpenPopup(true);
         })
         .catch((error) => {
           console.error("Error fetching activity details:", error);
         });
     };
-    
 
     const handleClosePopup = () => {
         setOpenPopup(false);
     };
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+      setOpen(true);
+  };
+
+  const handleClose = () => {
+      setOpen(false);
+  };
+
+  const deleteActivity = () => {
+    http.delete(`/Activity/${id}`)
+        .then((res) => {
+            console.log(res.data);
+            handleClose(); 
+        })
+        .catch((error) => {
+            console.error("Error deleting reward:", error);
+            handleClose(); 
+        });
+};
+
 
     const columns = [
-      { field: 'id', headerName: 'Activity ID', width: 90, cellClassName: 'name-column--cell' },      { field: 'activityname', headerName: 'Activity name', width: 110 },
-
-      { field: 'activityName', headerName: 'Activity Name', width: 120 }, 
+      { field: 'id', headerName: 'Activity ID', width: 90, cellClassName: 'name-column--cell' },      
+      { field: 'activity_Name', headerName: 'Activity Name', width: 120 }, 
       { field: 'tagId', headerName: 'Tag ID', width: 90 }, 
       { field: 'tagName', headerName: 'Tag Name', width: 110 }, // Using tag_Name from the model
       { field: 'activityDesc', headerName: 'Activity Description', width: 150 }, // Using activity_Desc from the model
-      { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
+      // { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
       // Add more columns if needed
       {
         field: 'manage',
@@ -104,7 +134,7 @@ function ManageActivitys() {{
                 background: '#008168',
               },
             }}
-            onClick={() => handleOpenPopup(params.row)}
+            onClick={() => navigate(`/editactivity/${params.row.id}`)}
           >
             <ManageAccountsIcon sx={{ ml: 1 }} />
           </Button>
@@ -120,21 +150,22 @@ function ManageActivitys() {{
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleOpenCancelDialog(params.row)}
+            onClick={handleOpen}
           >
             <CancelIcon sx={{ ml: 1 }} />
+            Delete
           </Button>
         ),
       },
     ];
     
 const rows = ActivityList.map((activity, i) => ({
-  id: activity.id,
+  id: i + 1,
   activityName: activity.activity_Name,
   tagId: activity.tag_Id,
   tagName: activity.tag_Name,
   activityDesc: activity.activity_Desc,
-  imageFile: activity.ImageFile,
+  // imageFile: activity.ImageFile,
   }));
 
   const [pageSize, setPageSize] = useState(5)
@@ -177,7 +208,7 @@ const rows = ActivityList.map((activity, i) => ({
                                     cursor: "pointer",
                                     fontWeight: 600,
                                     transition: "0.2s",
-                                }} onClick={() => navigate("/AddActivity")}>
+                                }} onClick={() => navigate("/addactivity")}>
                                 Add Activity
                             </Button>
 
@@ -222,7 +253,7 @@ const rows = ActivityList.map((activity, i) => ({
                           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                           pageSizeOptions={[5, 10, 25, 100]}
                       >
-                      </DataGrid>
+                      </DataGrid> 
                   </Box>
 
                   <Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
@@ -250,9 +281,9 @@ const rows = ActivityList.map((activity, i) => ({
                     <strong>Activity Description:</strong> {activity.activity_Desc}
                 </Typography>
 
-                <Typography>
+                {/* <Typography>
                     <strong>Image File:</strong> {activity.ImageFile}
-                </Typography>
+                </Typography> */}
             </Box>
         )}
     </DialogContent>
@@ -260,6 +291,27 @@ const rows = ActivityList.map((activity, i) => ({
         <Button variant="contained" onClick={handleClosePopup}>Close</Button>
     </DialogActions>
 </Dialog>
+
+<Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    Delete Activity
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this activity?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="inherit"
+                        onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" color="error"
+                        onClick={deleteActivity}>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
 
               </Box>

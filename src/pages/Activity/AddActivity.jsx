@@ -18,43 +18,45 @@ import "react-toastify/dist/ReactToastify.css";
 function AddActivity() {
   const navigate = useNavigate();
 
-  // Counter for auto-incrementing activity_Id
-  let activityIdCounter = 1;
+  // State for auto-incrementing activity_Id
+  const [activityIdCounter, setActivityIdCounter] = useState(1);
+
+  // State for auto-incrementing tag_Id (added this line)
+  const [tagIdCounter, setTagIdCounter] = useState(1);
 
   const formik = useFormik({
     initialValues: {
-      activity_Id: 0, // Initialize with 0
-      tag_Id: 0, // Initialize with 0
+      Id: 0,
+      // Changed from tag_Id: 0 to tag_Id: tagIdCounter (used the counter)
+      tag_Id: tagIdCounter,
       activity_Name: "",
       tag_Name: "",
       activity_Desc: "",
       activity_price: 0,
-      ImageFile: null,
+       //   ImageFile: null,
     },
-    validationSchema: yup.object({
-      // Your validation schema
-    }),
+    
+    validationSchema: yup.object({}),
     onSubmit: (data) => {
-      data.activity_Id = activityIdCounter++; 
-      data.tag_Id = activityIdCounter++; 
-
-      data.activity_Name = data.activity_Name.trim();
-      data.tag_Name = data.tag_Name.trim();
-      data.activity_price = data.activity_price;
-      data.activity_Desc = data.activity_Desc;
-      data.ImageFile = data.ImageFile;
-
-      console.log(data);
-
-      http.post("/Activity", data, {
-        headers: {
-        "Content-Type": "multipart/form-data",
-        },
+        // Increment the counters
+        setActivityIdCounter((prevCounter) => prevCounter + 1);
+        setTagIdCounter((prevCounter) => prevCounter + 1);
+      
+        // Ensure each row has a unique id
+        const rowWithId = {
+          ...data,
+          id: activityIdCounter,
+        };
+    
+        http.post("/Activity", rowWithId, {
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
         .then((res) => {
-            console.log(res);  // Log the entire response to check its structure
-            console.log(res.data);  // Log the 'data' property
-            navigate("/ManageActivities");
+          console.log(res);
+          console.log(res.data);
+          navigate("/ManageActivities");
         })
         .catch(function (err) {
           toast.error(`${err.response.data.message}`);
@@ -234,12 +236,12 @@ function AddActivity() {
                         />
                     </Grid>
                             
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <input
                             type="file"
                             onChange={(event) => formik.setFieldValue("ImageFile", event.target.files[0])}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     </Grid>
 

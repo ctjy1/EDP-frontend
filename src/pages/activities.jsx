@@ -33,12 +33,12 @@ function Activities() {
           <Grid item key={activity.id} xs={12} sm={6} md={4} lg={3}>
             <Card component={Link} to={`/activities/${activity.id}`}>
               <CardActionArea>
-                <CardMedia
+                {/* <CardMedia
                   component="img"
                   alt={activity.activity_Name}
                   height="140"
                   image={activity.ImageFile}
-                />
+                /> */}
                 <CardContent>
                   <Typography variant="h6" component="div">
                     {activity.activity_Name}
