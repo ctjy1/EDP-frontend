@@ -4,6 +4,8 @@ import {
   Toolbar,
   Typography,
   Box,
+  Menu,
+  MenuItem,
   Button,
   Menu,
   MenuItem,
@@ -11,6 +13,7 @@ import {
   CssBaseline,
   ThemeProvider,
 } from "@mui/material";
+import { ExpandMore } from '@mui/icons-material';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ExpandMore } from "@mui/icons-material";
@@ -41,6 +44,16 @@ import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
 
+
+//Feedback and Survey
+import Feedback from './pages/Feedback';
+import Surveys from './pages/Surveys';
+import Tickets from './pages/Tickets';
+import AddFeedback from './pages/AddFeedback';
+import AddSurvey from './pages/AddSurvey';
+import AddTicket from './pages/AddTicket';
+import FAQPage from './pages/FAQ';
+
 // Bookings pages
 import Carts from "./pages/Bookings/Carts";
 import AddCart from "./pages/Bookings/AddCart";
@@ -64,6 +77,7 @@ import ManageDeletedRewards from './pages/Rewards/ManageDeletedRewards';
 import ManageUsedRewards from "./pages/Rewards/ManageUsedRewards";
 
 import ViewReward from "./pages/Rewards/ViewReward";
+
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
@@ -160,6 +174,7 @@ function App() {
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
+
                     <Typography
                       variant="h3"
                       component="div"
@@ -173,7 +188,6 @@ function App() {
                           height: "28px",
                           paddingLeft: "13px",
                         }}
-                      />
                     </Typography>
                   </Link>
 {/* 
@@ -193,6 +207,7 @@ function App() {
                     <Link to="/" style={linkStyle}>
                       <Typography>Activities</Typography>
                     </Link>
+
 
                     <Link to="/gallery" style={linkStyle}>
                       <Typography>Gallery</Typography>
@@ -435,6 +450,16 @@ function App() {
                 <Route path={"/adminHome"} element={<AdminHome />} />
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
+
+
+                
+                <Route path={"/feedback"} element={<Feedback />} />
+                <Route path={"/surveys"} element={<Surveys />} />
+                <Route path={"/ticket"} element={<Tickets />} />
+                <Route path={"/feedbackForm"} element={<AddFeedback />} />
+                <Route path={"/FAQ"} element={<FAQPage />} />
+                <Route path={"/surveyForm"} element={<AddSurvey />} />
+                <Route path={"/ticketForm"} element={<AddTicket />} />
 
                 {/* Carts Routes for user side*/}
                 <Route path={"/addcart"} element={<AddCart />} />
