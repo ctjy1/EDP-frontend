@@ -10,6 +10,7 @@ import {
   CssBaseline,
   ThemeProvider,
 } from "@mui/material";
+
 import { ExpandMore } from '@mui/icons-material';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -29,12 +30,25 @@ import UserProfile from "./pages/Accounts/UserProfile";
 import ManageReferralTracking from "./pages/Accounts/ManageReferralTracking";
 import ManageUsers from "./pages/Accounts/ManageUsers";
 import ManageAdmin from "./pages/Accounts/ManageAdmin";
+
 import ManageGallery from "./pages/Accounts/ManageGallery";
+
 import Register from "./pages/Accounts/Register";
 import Login from "./pages/Accounts/Login";
 import ForgetPassword from "./pages/Accounts/ForgetPassword";
 import ResetPassword from "./pages/Accounts/ResetPassword";
 import ReferralPage from "./pages/Accounts/ReferralPage";
+
+import AdminHome from "./pages/AdminHome";
+import UserHome from "./pages/UserHome";
+import Chatbot from "./pages/Components/Chatbot";
+import EditActivity from "./pages/Activity/EditActivity";
+
+// Activitys
+import AddActivity from "./pages/Activity/AddActivity";
+import ManageActivities from "./pages/Activity/ManageActivities";
+import SingleActivity from "./pages/Activity/SingleActivity";
+
 import Calendar from "./pages/Accounts/Calendar";
 import AdminHome from "./pages/AdminHome";
 import UserHome from "./pages/UserHome";
@@ -75,6 +89,7 @@ import ManageUsedRewards from "./pages/Rewards/ManageUsedRewards";
 import ViewReward from "./pages/Rewards/ViewReward";
 
 
+
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
 import http from "./http";
@@ -91,6 +106,14 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       http.get("/user/auth").then((res) => {
+        setUser(res.data.user);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      http.get('/user/auth').then((res) => {
         setUser(res.data.user);
       });
     }
@@ -113,6 +136,7 @@ function App() {
       default:
         return "white"; // Default color
     }
+
   };
 
   // Define different link colors for different user roles
@@ -156,14 +180,31 @@ function App() {
     setAnchorElSupport(event.currentTarget);
   };
 
+
   const handleCloseSupport = () => {
     setAnchorElSupport(null);
+
   };
 
+  const appBarStyle = {
+    backgroundColor: getColorForRole(userRole), // Set background color based on user role
+  };
+  const linkStyle = {
+    color: getLinkColorForRole(userRole), // Use the function to determine link color based on user role
+    textDecoration: "none", // Remove underline from links
+    margin: "0 10px", // Add margin to links
+    fontSize: '200px',
+    display: "flex", // Use flexbox for layout
+    justifyContent: "center", // Center the links horizontally
+    alignItems: 'center'
+  };
+  
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
       <Router>
+
         <RedirectHandler setUser={setUser} setUserRole={setUserRole} />
+
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -393,6 +434,7 @@ function App() {
                     )}
                   </Box>
 
+
                   <Box sx={{ flexGrow: 1 }}></Box>
                   {user ? (
                     <>
@@ -430,6 +472,12 @@ function App() {
                 <Route path={"/gallery"} element={<Gallery />} />
                 <Route path={"/addgallery"} element={<AddGallery />} />
                 <Route path={"/editpost/:id"} element={<EditPost />} />
+                <Route path={"/addactivity"} element={<AddActivity />} />
+                <Route path={"/manageactivities"} element={<ManageActivities />} />
+                <Route path={"/SingleActivity/:id"} element={<SingleActivity />} />
+                <Route path={"/EditActivity/:id"} element={<EditActivity />} />
+                
+                
                 <Route
                   path={"/editUserDetails/:id"}
                   element={<EditUserDetails />}

@@ -111,6 +111,7 @@
 // //       <div className="navbar-links-container">
       
 // <<<<<<< gabriel-changes
+
 //     {userRole === "user" && (
 //   <>
 //        <Link to="/userHome">Home</Link>
@@ -121,6 +122,7 @@
 //     <button onClick={logout}>Logout</button>
 //   </>
 // )}
+
 
 // {/* this was the problematic code!! */}
 // {/* {user && (
@@ -211,3 +213,4 @@
 // // };
 
 // // export default Navbar;
+
