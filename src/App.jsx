@@ -6,9 +6,6 @@ import {
   Box,
   Menu,
   MenuItem,
-  Button,
-  Menu,
-  MenuItem,
   AppBar,
   CssBaseline,
   ThemeProvider,
@@ -17,7 +14,6 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { ExpandMore } from "@mui/icons-material";
 import { ColorModeContext, useMode } from "./themes/MyTheme";
 import UserContext from "./contexts/UserContext";
 import * as jwtDecodeModule from "jwt-decode";
@@ -60,13 +56,13 @@ import Chatbot from "./pages/Components/Chatbot";
 
 
 //Feedback and Survey
-import Feedback from './pages/Feedback';
-import Surveys from './pages/Surveys';
-import Tickets from './pages/Tickets';
-import AddFeedback from './pages/AddFeedback';
-import AddSurvey from './pages/AddSurvey';
-import AddTicket from './pages/AddTicket';
-import FAQPage from './pages/FAQ';
+import Feedback from './pages/Feedback/Feedback';
+import Surveys from './pages/Feedback/Surveys';
+import Tickets from './pages/Feedback/Tickets';
+import AddFeedback from './pages/Feedback/AddFeedback';
+import AddSurvey from './pages/Feedback/AddSurvey';
+import AddTicket from './pages/Feedback/AddTicket';
+import FAQPage from './pages/Feedback/FAQ';
 
 // Bookings pages
 import Carts from "./pages/Bookings/Carts";
@@ -103,7 +99,9 @@ function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
+  // Separate state for each menu
+  const [anchorElCarts, setAnchorElCarts] = useState(null);
+  const [anchorElSupport, setAnchorElSupport] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -168,27 +166,24 @@ function App() {
     alignItems: "center",
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  // Handlers for the Carts menu
+  const handleClickCarts = (event) => {
+    setAnchorElCarts(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-
+  const handleCloseCarts = () => {
+    setAnchorElCarts(null);
   };
 
-  // Define different link colors for different user roles
-  const getLinkColorForRole = (role) => {
-    switch (role) {
-      case "user":
-        return "black"; //  color for regular users
-      case "Account Manager":
-        return "white"; //  color for account managers
-      case "Super Adminstrator":
-        return "white"; //  color for super administrators
-      default:
-        return "black"; // Default color
-    }
+  // Handlers for the Support menu
+  const handleClickSupport = (event) => {
+    setAnchorElSupport(event.currentTarget);
+  };
+
+
+  const handleCloseSupport = () => {
+    setAnchorElSupport(null);
+
   };
 
   const appBarStyle = {
@@ -295,7 +290,7 @@ function App() {
                           to="#"
                           aria-controls="menu"
                           aria-haspopup="true"
-                          onClick={handleClick}
+                          onClick={handleClickCarts}
                           style={{ display: "flex", alignItems: "center" }}
                         >
                           <Typography style={{ marginRight: "4px" }}>
@@ -305,21 +300,21 @@ function App() {
                         </Link>
                         <Menu
                           id="menu"
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
+                          anchorEl={anchorElCarts}
+                          open={Boolean(anchorElCarts)}
+                          onClose={handleCloseCarts}
                         >
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseCarts}>
                             <Link to="/addcart">
                               <Typography color="white">Add Cart</Typography>
                             </Link>
                           </MenuItem>
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseCarts}>
                             <Link to="/setbudget">
                               <Typography color="white">Set Budget</Typography>
                             </Link>
                           </MenuItem>
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseCarts}>
                             <Link to="/userorders">
                               <Typography color="white">My Orders</Typography>
                             </Link>
@@ -330,7 +325,7 @@ function App() {
                           to="#"
                           aria-controls="support-menu"
                           aria-haspopup="true"
-                          onClick={handleClick}
+                          onClick={handleClickSupport}
                           style={{ display: "flex", alignItems: "center" }}
                         >
                           <Typography style={{ marginRight: "4px" }}>
@@ -340,23 +335,23 @@ function App() {
                         </Link>
                         <Menu
                           id="support-menu"
-                          anchorEl={anchorEl}
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
+                          anchorEl={anchorElSupport}
+                          open={Boolean(anchorElSupport)}
+                          onClose={handleCloseSupport}
                         >
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseSupport}>
                             <Link to="/feedbackForm">
                               <Typography color="white">
                                 Add Feedback
                               </Typography>
                             </Link>
                           </MenuItem>
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseSupport}>
                             <Link to="/surveyForm">
                               <Typography color="white">Add Survey</Typography>
                             </Link>
                           </MenuItem>
-                          <MenuItem onClick={handleClose}>
+                          <MenuItem onClick={handleCloseSupport}>
                             <Link to="/ticketForm">
                               <Typography color="white">Add Ticket</Typography>
                             </Link>

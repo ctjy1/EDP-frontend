@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, Card, CardContent, Input, IconButton, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { AccessTime, Search, Clear } from '@mui/icons-material';
 import dayjs from 'dayjs';
-import global from '../global';
-import http from '../http';
+import global from '../../global';
+import http from '../../http';
 
 
 function Surveys() {

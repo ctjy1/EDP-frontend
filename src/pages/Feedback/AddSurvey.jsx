@@ -15,7 +15,7 @@ import {
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import http from '../http';
+import http from '../../http';
 
 
 function AddSurvey() {
