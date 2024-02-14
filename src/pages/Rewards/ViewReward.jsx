@@ -62,7 +62,9 @@ function ViewRewards() {
 
                 rewards.forEach(reward => {
                     if (String(reward.redeemedBy) === String(decodedUser.nameid)) {
-                        redeemedRewards.push(reward);
+                        if (reward.usedAt !== null && reward.deletedAt !== null) {
+                            redeemedRewards.push(reward);
+                        }
                     } else if (reward.UsedAt == null || reward.DeletedAt == null) {
                         unredeemedRewards.push(reward);
                     }
@@ -265,7 +267,7 @@ function ViewRewards() {
                                         color="primary"
                                         sx={{
                                             padding: '4px',
-                                            color: 'white',
+                                            color: 'black',
                                             fontSize: '14px',
                                             transition: 'color 0.3s ease, font-size 0.3s ease',
                                             '&:hover': {
