@@ -155,12 +155,10 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser, userRole, setUserRole }}>
       <Router>
-        <RedirectHandler setUser={setUser} setUserRole={setUserRole} />{" "}
-        {/* Ensure RedirectHandler is used correctly */}
+        <RedirectHandler setUser={setUser} setUserRole={setUserRole} />
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-
             <AppBar
               position="static"
               className="AppBar"
@@ -174,7 +172,6 @@ function App() {
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-
                     <Typography
                       variant="h3"
                       component="div"
@@ -188,6 +185,7 @@ function App() {
                           height: "28px",
                           paddingLeft: "13px",
                         }}
+                      />
                     </Typography>
                   </Link>
 {/* 
