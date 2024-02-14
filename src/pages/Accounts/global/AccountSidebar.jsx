@@ -3,14 +3,11 @@ import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarIcon from '@mui/icons-material/Star';
 import { tokens } from "../../../themes/MyTheme";
@@ -158,7 +155,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              to="/"
+              to="/manageAdmin"
               title="Manage Admins"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
@@ -180,7 +177,20 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
          
-
+         <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Gallery
+            </Typography>
+            <Item
+              to="/manageGallery"
+              title="Manage Gallery"
+              icon={<PhotoLibraryIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>

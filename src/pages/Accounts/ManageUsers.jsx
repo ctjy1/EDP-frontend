@@ -19,6 +19,10 @@ function ManageUsers() {{
   const [userList, setUserList] = useState([]);
   const [search, setSearch] = useState("");
   const { user } = useContext(UserContext);
+  const [selectedUser, setSelectedUser] = useState(null); // New state for popup user details
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedUserForDeletion, setSelectedUserForDeletion] = useState(null);
+
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -37,6 +41,21 @@ function ManageUsers() {{
         setUserList(res.data);
     });
   };
+
+  const deleteUser = () => {
+    if (selectedUserForDeletion && selectedUserForDeletion.id) {
+      http.delete(`/User/${selectedUserForDeletion.id}`)
+        .then(() => {
+          setOpenCancelDialog(false); // Close the dialog
+          getUsers(); // Refresh the user list
+        })
+        .catch((error) => {
+          console.error("Error deleting user:", error);
+          // Optionally handle errors, such as displaying a notification
+        });
+    }
+  };
+  
 
   useEffect(() => {
     getUsers();
@@ -57,25 +76,22 @@ function ManageUsers() {{
     getUsers();
   };
 
-  const [openPopup, setOpenPopup] = useState(false);
+ 
     const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
-    const handleOpenPopup = (id) => {
-        http.get(`/User/${id}`)
-            .then((res) => {
-                setUser(res.data);
-                setOpenPopup(true);
-            })
-            .catch((error) => {
-                console.error("Error fetching user details:", error);
-            });
+    const handleOpenPopup = (user) => {
+      setSelectedUser(user); // Set the selected user details
+      setOpenPopup(true);
     };
-    
-
     const handleClosePopup = () => {
         setOpenPopup(false);
     };
 
+    const handleOpenCancelDialog = (user) => {
+      setSelectedUserForDeletion(user);
+      setOpenCancelDialog(true);
+    };
+    
 
     const columns = [
       { field: 'id', headerName: 'User ID', width: 90, cellClassName: 'name-column--cell' },
@@ -91,7 +107,6 @@ function ManageUsers() {{
       { field: 'username', headerName: 'Username', width: 110 },
       { field: 'email', headerName: 'Email', width: 150 },
       { field: 'contactNumber', headerName: 'Mobile Number', width: 150 },
-      // Add more columns if needed
       {
         field: 'manage',
         headerName: 'Manage',
@@ -115,7 +130,7 @@ function ManageUsers() {{
       },
       {
         field: 'cancel',
-        headerName: 'Cancel',
+        headerName: 'Delete',
         width: 110,
         sortable: false,
         filterable: false,
@@ -218,50 +233,41 @@ const rows = userList.map((user, i) => ({
                   </Box>
 
 
-<Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
-    <DialogTitle>User Details</DialogTitle>
+                  <Dialog open={openPopup} onClose={handleClosePopup} fullWidth>
+    <DialogTitle><strong>User Details</strong></DialogTitle>
     <DialogContent>
-        {user && (
+        {selectedUser && (
             <Box>
-                  <Typography>
-                  <strong>User ID:</strong> {user.id}
-                </Typography>
-
-                <Typography>
-                  <strong>Name:</strong> {user.firstName} {user.lastName}
-                </Typography>
-
-                <Typography>
-                  <strong>Userame:</strong> @{user.username}
-                </Typography>
-
-                <Typography>
-                  <strong>Email:</strong> {user.email}
-                </Typography>
-
-                <Typography>
-                  <strong>Phone Number:</strong> {user.contactNumber}
-                </Typography>
-
-                <Typography>
-                  <strong>Address 1:</strong> {user.address1}
-                </Typography>
-
-                <Typography>
-                  <strong>Address 2:</strong> {user.address2}
-                </Typography>
-
-                <Typography>
-                  <strong>Referral Code:</strong> {user.referralCode}
-                </Typography>
+                <Typography><strong>User ID:</strong> {selectedUser.id}</Typography>
+                <Typography><strong>Name:</strong> {selectedUser.firstName} {selectedUser.lastName}</Typography>
+                <Typography><strong>Username:</strong> @{selectedUser.username}</Typography>
+                <Typography><strong>Email:</strong> {selectedUser.email}</Typography>
+                <Typography><strong>Phone Number:</strong> {selectedUser.contactNumber}</Typography>
+                <Typography><strong>Address 1:</strong> {selectedUser.address1}</Typography>
+                <Typography><strong>Address 2:</strong> {selectedUser.address2}</Typography>
+                <Typography><strong>Referral Code:</strong> {selectedUser.referralCode}</Typography>
             </Box>
         )}
-       
     </DialogContent>
     <DialogActions sx={{ padding: '20px' }}>
         <Button variant="contained" onClick={handleClosePopup}>Close</Button>
     </DialogActions>
 </Dialog>
+
+<Dialog open={openCancelDialog} onClose={() => setOpenCancelDialog(false)}>
+  <DialogTitle>Confirm Delete</DialogTitle>
+  <DialogContent>
+    <DialogContentText>
+      Are you sure you want to delete this user?
+    </DialogContentText>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setOpenCancelDialog(false)}>Cancel</Button>
+    <Button onClick={deleteUser} color="error">Delete</Button>
+  </DialogActions>
+</Dialog>
+
+
 
 
               </Box>

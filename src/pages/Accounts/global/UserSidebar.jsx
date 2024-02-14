@@ -12,6 +12,9 @@ import DirectionsBikeOutlinedIcon from "@mui/icons-material/DirectionsBikeOutlin
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined";
+import InsightsIcon from '@mui/icons-material/Insights';
+
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -55,7 +58,7 @@ const UserSidebar = () => {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: "#9e5b1f",
+          background: "#9B0000",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -135,6 +138,14 @@ const UserSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+              <Item
+              title="My Rewards"
+              to="/viewreward"
+              icon={<LocalActivityOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+            
 
 {user && (
   <Item
@@ -151,8 +162,16 @@ const UserSidebar = () => {
 
             <Item
               title="Invite a friend"
-              to="/"
+              to="/ReferralPage"
               icon={<StarIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+<Item
+              title="Referral Tracking"
+              to="/userReferralTracking"
+              icon={<InsightsIcon />}
               selected={selected}
               setSelected={setSelected}
             />
