@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 function ManageActivitys() {{
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [idToDelete, setIdToDelete] = useState(null);
   const [ActivityList, setActivityList] = useState([]);
   const [search, setSearch] = useState("");
   
@@ -30,6 +31,7 @@ function ManageActivitys() {{
 
   const getActivitys = () => {
     http.get("/Activity").then((res) => {
+      console.log(res.data)
       setActivityList(res.data);
     }).catch((error) => {
         console.log("Error fetching activity details:", error);
@@ -42,9 +44,10 @@ function ManageActivitys() {{
           setOpenPopup(true);
         })
         .catch((error) => {
-          console.error("Error fetching activity details:", error);
+          console.error("Error fetching activity details:", error); 
         });
   };
+
 
   const searchActivitys = () => {
     http.get(`/Activitys?search=${search}`).then((res) => {
@@ -84,38 +87,63 @@ function ManageActivitys() {{
         });
     };
 
+    
+
     const handleClosePopup = () => {
         setOpenPopup(false);
     };
 
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => {
-      setOpen(true);
+  //   const handleOpen = () => {
+  //     setOpen(true);
+  // }; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+
+  // const handleClose = () => {
+  //     setOpen(false);
+  // };
+
+  const handleOpen = (id) => {
+    setIdToDelete(id); // Set the id to delete when opening the dialog
+    setOpen(true);
   };
 
   const handleClose = () => {
-      setOpen(false);
+    setIdToDelete(null); // Reset the id when closing the dialog
+    setOpen(false);
   };
 
+//   const deleteActivity = () => {
+//     http.delete(`/Activity/${id}`)
+//         .then((res) => {
+//             console.log(res.data);
+//             handleClose(); 
+//         })
+//         .catch((error) => {
+//             console.error("Error deleting activity:", error); ++++++++++++++++++++++++++++++++++++++++++++
+//             handleClose(); 
+//         });
+// };
   const deleteActivity = () => {
-    http.delete(`/Activity/${id}`)
+    if (idToDelete) {
+      http.delete(`/Activity/${idToDelete}`)
         .then((res) => {
-            console.log(res.data);
-            handleClose(); 
+          console.log(res.data);
+          handleClose();
+          getActivitys(); // Refresh the activity list or perform any other necessary actions after deletion
         })
         .catch((error) => {
-            console.error("Error deleting reward:", error);
-            handleClose(); 
+          console.error("Error deleting activity:", error);
+          handleClose();
         });
-};
+    }
+  };
 
 
     const columns = [
       { field: 'id', headerName: 'Activity ID', width: 90, cellClassName: 'name-column--cell' },      
       { field: 'activity_Name', headerName: 'Activity Name', width: 120 }, 
       { field: 'tagId', headerName: 'Tag ID', width: 90 }, 
-      { field: 'tagName', headerName: 'Tag Name', width: 110 }, // Using tag_Name from the model
       { field: 'activityDesc', headerName: 'Activity Description', width: 150 }, // Using activity_Desc from the model
       // { field: 'imageFile', headerName: 'Image File', width: 150 }, // Using ImageFile from the model
       // Add more columns if needed
@@ -150,9 +178,10 @@ function ManageActivitys() {{
           <Button
             variant="contained"
             color="error"
-            onClick={handleOpen}
+            // onClick={handleOpen}
+            onClick={() => handleOpen(params.row.id)}
           >
-            <CancelIcon sx={{ ml: 1 }} />
+            <CancelIcon sx={{ ml: 1 }} /> 
             Delete
           </Button>
         ),
@@ -160,10 +189,9 @@ function ManageActivitys() {{
     ];
     
 const rows = ActivityList.map((activity, i) => ({
-  id: i + 1,
+  id: activity.id,
   activityName: activity.activity_Name,
   tagId: activity.tag_Id,
-  tagName: activity.tag_Name,
   activityDesc: activity.activity_Desc,
   // imageFile: activity.ImageFile,
   }));
@@ -271,10 +299,6 @@ const rows = ActivityList.map((activity, i) => ({
 
                 <Typography>
                     <strong>Tag ID:</strong> {activity.tag_Id}
-                </Typography>
-
-                <Typography>
-                    <strong>Tag Name:</strong> {activity.tag_Name}
                 </Typography>
 
                 <Typography>
