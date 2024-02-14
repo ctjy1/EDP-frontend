@@ -176,7 +176,7 @@ function App() {
                       />
                     </Typography>
                   </Link>
-
+{/* 
                   <Box
                     sx={{
                       display: "flex",
@@ -201,7 +201,7 @@ function App() {
                     <Link to="/faq" style={linkStyle}>
                       <Typography>FAQ</Typography>
                     </Link>
-                  </Box>
+                  </Box> */}
                   <Box
                     sx={{
                       display: "flex",
