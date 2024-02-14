@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import global from '../global';
 import http from '../http';
 
+
 function Ticket() {
   const [ticketList, setTicketList] = useState([]);
   const [search, setSearch] = useState('');
@@ -99,7 +100,7 @@ function Ticket() {
     <Grid container spacing={2}>
       {
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 750 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="center" onClick={() => sortTicket('id')}>

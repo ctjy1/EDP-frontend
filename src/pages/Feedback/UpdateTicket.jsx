@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import http from '../http';
 
-// import ticketImage from '/images/ticket.png';
+
 
 
 function UpdateTicket() {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            issue: '', 
-            issue_Description: '',
-            issue_Status: '' 
+            issue: ticket.issue, 
+            issue_Description: ticket.issue_Description,
+            issue_Status: ticket.issue_Status 
         },
         validationSchema: yup.object({
             issue: yup.string().trim()
@@ -46,17 +46,7 @@ function UpdateTicket() {
 
     return (<Box>
         <Box
-            // sx={{
-            //     backgroundImage: `url(${ticketImage})`,
-            //     backgroundSize: 'cover',
-            //     height: '390px', // Adjust the height as needed
-            //     color: 'white',
-            //     textAlign: 'center',
-            //     display: 'flex',
-            //     flexDirection: 'column',
-            //     justifyContent: 'center',
-
-            // }}
+            
             >
             <Typography variant="h3" sx={{ my: 2, textAlign: 'center' }}>
                 <b>Ticket Issue Form</b>
