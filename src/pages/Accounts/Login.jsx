@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -10,7 +10,7 @@ import UserContext from "../../contexts/UserContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const formik = useFormik({
     initialValues: {
@@ -39,13 +39,23 @@ function Login() {
         .then((res) => {
           localStorage.setItem("accessToken", res.data.accessToken);
           setUser(res.data.user);
-          navigate("/");
-        })
+          const userRole = res.data.user.userRole;
+      if (userRole === 'Super Adminstrator' || userRole === 'Account Manager' || userRole === "Bookings Manager" || userRole === "Rewards Manager" || userRole === "Feedback Manager") {
+        navigate("/adminHome");
+      } else if (userRole === 'user') {
+        navigate("/userHome");
+      }
+    })
         .catch(function (err) {
           toast.error(`${err.response.data.message}`);
         });
     },
   });
+
+  // Log user object when it changes
+  useEffect(() => {
+    console.log('User Object:', user);
+  }, [user]);
 
   return (
     <>
@@ -54,7 +64,7 @@ function Login() {
         marginTop: 3,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "center"
       }}
     >
      <Typography
