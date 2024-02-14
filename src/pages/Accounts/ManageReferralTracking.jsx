@@ -299,6 +299,7 @@ console.log("Rows:", rows); // Log the generated rows to the console
                 <Typography><strong>Reffered Username:</strong> {selectedUser.referredUsername} {selectedUser.lastName}</Typography>
                 <Typography><strong>Reffered Username:</strong> @{selectedUser.referringUsername}</Typography>
                 <Typography><strong>Date Fufilled:</strong> {selectedUser.dateFulfilled}</Typography>
+                <Typography><strong>Points Earned:</strong> {selectedUser.points}</Typography>
                 <Typography><strong>Status:</strong> {selectedUser.status}</Typography>
                 <FormControl fullWidth margin="normal">
                                 <InputLabel>Status</InputLabel>

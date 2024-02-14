@@ -11,6 +11,8 @@ import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import DirectionsBikeOutlinedIcon from "@mui/icons-material/DirectionsBikeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined";
 import InsightsIcon from '@mui/icons-material/Insights';
 
 
@@ -136,6 +138,14 @@ const UserSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+              <Item
+              title="My Rewards"
+              to="/viewreward"
+              icon={<LocalActivityOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+            
 
 {user && (
   <Item

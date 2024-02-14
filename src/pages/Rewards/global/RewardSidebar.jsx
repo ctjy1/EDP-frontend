@@ -3,11 +3,14 @@ import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarIcon from '@mui/icons-material/Star';
 import { tokens } from "../../../themes/MyTheme";
@@ -35,7 +38,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const RewardSidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -129,68 +132,37 @@ const Sidebar = () => {
     )}
   </Box>
 )}
-
-
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-         
-   <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Accounts
-            </Typography>
             <Item
-              to="/manageUsers"
-              title="Manage Users"
+              to="/manageRewards"
+              title="Manage Active Rewards"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              to="/manageAdmin"
-              title="Manage Admins"
+              to="/addreward"
+              title="Add Reward"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
+            
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Referrals
+              Inactive
             </Typography>
             <Item
-              to="/manageReferralTracking"
-              title="Manage Referral Tracking"
+              to="/manageDeletedRewards"
+              title="Manage Deleted Rewards"
               icon={<StarIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-         
-         <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Gallery
-            </Typography>
-            <Item
-              to="/manageGallery"
-              title="Manage Gallery"
-              icon={<PhotoLibraryIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
           </Box>
         </Menu>
       </ProSidebar>
@@ -198,4 +170,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default RewardSidebar;
