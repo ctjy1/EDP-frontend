@@ -15,7 +15,7 @@
   import { useFormik } from 'formik';
   import { useNavigate } from 'react-router-dom';
   import * as yup from 'yup';
-  import http from '../http';
+  import http from '../../http';
 
 
   function AddSurvey() {
@@ -65,7 +65,7 @@
 
     return (
       <Box sx={{ minHeight: '100vh', padding: '20px', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px" }}>
+        <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color: 'black' }}>
           <strong>Survey</strong>
         </Typography>
         <Box
@@ -76,10 +76,11 @@
           maxWidth="700px"
           mt={3}>
 
-          <Box component="form" onSubmit={formik.handleSubmit} >
-            <FormControl component="fieldset" >
-              <FormLabel>How satisfied were you with your booking experience on our website?</FormLabel>
+          <Box component="form" onSubmit={formik.handleSubmit} sx={{color: 'black'}}>
+            <FormControl component="fieldset">
+              <FormLabel sx={{color: 'black'}}>How satisfied were you with your booking experience on our website?</FormLabel>
               <RadioGroup
+              sx={{color: 'black'}}
                 row
                 name="satisfaction"
                 value={formik.values.satisfaction}
@@ -96,7 +97,7 @@
                 <Typography color="error">{formik.errors.satisfaction}</Typography>
               )}
 
-              <FormLabel>How easy was it to find what you were looking for on our website?</FormLabel>
+              <FormLabel sx={{color: 'black'}}>How easy was it to find what you were looking for on our website?</FormLabel>
               <RadioGroup
                 row
                 name="ease"
@@ -114,7 +115,7 @@
                 <Typography color="error">{formik.errors.ease}</Typography>
               )}
 
-              <FormLabel>How would you rate the booking process?</FormLabel>
+              <FormLabel sx={{color: 'black'}}>How would you rate the booking process?</FormLabel>
               <RadioGroup
                 row
                 name="booking"
@@ -134,6 +135,7 @@
             </FormControl>
             <p>Comments</p>
             <TextField
+            sx={{ mb: 2, backgroundColor: "#fdcda9" }}
               fullWidth
               margin="dense"
               autoComplete="off"

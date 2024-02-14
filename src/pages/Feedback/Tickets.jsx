@@ -1,157 +1,113 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  Typography,
-  Grid,
-  Input,
-  IconButton,
-  TableContainer,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@mui/material';
-import { AccessTime, Search, Clear } from '@mui/icons-material';
+import { Box, Typography, Grid, Input, IconButton, Paper, Button } from '@mui/material';
+import { Search, Clear } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
-import global from '../global';
-import http from '../http';
-
+import global from '../../global';
+import http from '../../http';
+import { useNavigate } from 'react-router-dom';
 
 function Ticket() {
-  const [ticketList, setTicketList] = useState([]);
-  const [search, setSearch] = useState('');
-  const [sortDirection, setSortDirection] = useState('asc'); // 'asc' or 'desc'
-  const [sortedField, setSortedField] = useState('id');
+    const [ticketList, setTicketList] = useState([]);
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
 
-  const onSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
+    const onSearchChange = (e) => {
+        setSearch(e.target.value);
+    };
 
-  const getTicket = () => {
-    http.get('/Cust_Ticket').then((res) => {
-      setTicketList(res.data);
-    });
-  };
+    const getTicket = () => {
+        http.get('/Cust_Ticket').then((res) => {
+            setTicketList(res.data);
+        });
+    };
 
-  const searchTicket = () => {
-    http.get(`/Cust_Ticket?search=${search}`).then((res) => {
-      setTicketList(res.data);
-    });
-  };
-  const sortTicket = (field) => {
-    const direction = sortDirection === 'asc' ? 'desc' : 'asc';
-    setSortedField(field);
-    setSortDirection(direction);
+    const searchTicket = () => {
+        http.get(`/Cust_Ticket?search=${search}`).then((res) => {
+            setTicketList(res.data);
+        });
+    };
 
-    const sortedList = [...ticketList].sort((a, b) => {
-      if (direction === 'asc') {
-        return a[field] - b[field];
-      } else {
-        return b[field] - a[field];
-      }
-    });
-
-    setticketList(sortedList);
-  };
-
-  useEffect(() => {
-    getTicket();
-  }, []);
-
-  useEffect(() => {
-    http.get('/Cust_Ticket').then((res) => {
-      setTicketList(res.data);
-    });
-  }, []);
-
-  return (<Box>
-    <Typography variant="h5" sx={{ my: 2 }}>
-      Ticket issues will be shown here
-    </Typography>
-
-    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-      <Input
-        value={search}
-        placeholder="Search"
-        onChange={onSearchChange}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+    const onSearchKeyDown = (e) => {
+        if (e.key === "Enter") {
             searchTicket();
-          }
-        }}
-      />
-      <IconButton color="primary" onClick={searchTicket}>
-        <Search />
-      </IconButton>
-      <IconButton
-        color="primary"
-        onClick={() => {
-          setSearch('');
-          getTicket();
-        }}
-      >
-        <Clear />
-      </IconButton>
-    </Box>
+        }
+    };
 
-    <Grid container spacing={2}>
-      {
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 750 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" onClick={() => sortTicket('id')}>
-                  User ID
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('id')}>
-                  Ticket ID
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('issue')}>
-                  Issue
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('issue_Description')}>
-                  Issue Description
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('issue_Status')}>
-                  Issue Status
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('createdAt')}>
-                  Created At
-                </TableCell>
-                <TableCell align="center" onClick={() => sortTicket('updatedAt')}>
-                  Updated At
-                </TableCell>
-                <TableCell>
-                  
-                </TableCell>
-              </TableRow>
-            </TableHead>
+    useEffect(() => {
+        getTicket();
+    }, []);
 
-            <TableBody>
-              {ticketList.map((ticket, i) => (
-                <TableRow key={ticket.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="center">{ticket.userId}</TableCell>
-                  <TableCell align="center">T{ticket.id}</TableCell>
-                  <TableCell align="center">{ticket.issue}</TableCell>
-                  <TableCell align="center">{ticket.issue_Description}</TableCell>
-                  <TableCell align="center">{ticket.issue_Status}</TableCell>
-                  <TableCell align="center">{dayjs(ticket.createdAt).format(global.datetimeFormat)}</TableCell>
-                  <TableCell align="center">{dayjs(ticket.updatedAt).format(global.datetimeFormat)}</TableCell>
-                  <TableCell align="center">
-                    <Button variant="outlined" color="primary" onClick={() => handleUpdate(ticket.id)}>
-                      Update Entry
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      }
-    </Grid>
-  </Box>);
+    const updateTicket = (id) => {
+        navigate(`/updateTicket/${id}`);
+    };
+
+    const columns = [
+        { field: 'id', headerName: 'Ticket ID', width: 150 },
+        { field: 'issue', headerName: 'Issue', width: 200 },
+        { field: 'issue_Description', headerName: 'Issue Description', width: 200 },
+        { field: 'issue_Status', headerName: 'Issue Status', width: 150 },
+        { field: 'createdAt', headerName: 'Created At', width: 200,
+            valueFormatter: (params) => dayjs(params.value).format(global.datetimeFormat) },
+        { field: 'updatedAt', headerName: 'Updated At', width: 200,
+            valueFormatter: (params) => dayjs(params.value).format(global.datetimeFormat) },
+        {
+            field: 'action',
+            headerName: 'Action',
+            width: 150,
+            renderCell: (params) => (
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => updateTicket(params.row.id)}
+                >
+                    Update
+                </Button>
+            ),
+        },
+    ];
+
+    return (
+        <div className="app">
+            <main className="adminContent">
+                <Box m="20px">
+                    <Typography variant="h5" sx={{ my: 2 }}>
+                        Ticket issues will be shown here
+                    </Typography>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Input value={search} placeholder="Search"
+                            onChange={onSearchChange}
+                            onKeyDown={onSearchKeyDown} />
+                        <IconButton color="primary"
+                            onClick={searchTicket} >
+                            <Search />
+                        </IconButton>
+                        <IconButton color="primary"
+                            onClick={() => {
+                                setSearch('');
+                                getTicket();
+                            }}>
+                            <Clear />
+                        </IconButton>
+                    </Box>
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Paper sx={{ height: 400, width: '100%' }}>
+                                <DataGrid
+                                    rows={ticketList}
+                                    columns={columns}
+                                    pageSize={5}
+                                    rowsPerPageOptions={[5, 10, 20]}
+                                />
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </main>
+        </div>
+    );
 }
+
 export default Ticket;

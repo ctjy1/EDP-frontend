@@ -40,13 +40,14 @@ import UserHome from "./pages/UserHome";
 import Chatbot from "./pages/Components/Chatbot";
 
 //Feedback and Survey
-import Feedback from './pages/Feedback';
-import Surveys from './pages/Surveys';
-import Tickets from './pages/Tickets';
-import AddFeedback from './pages/AddFeedback';
-import AddSurvey from './pages/AddSurvey';
-import AddTicket from './pages/AddTicket';
-import FAQPage from './pages/FAQ';
+import Feedback from './pages/Feedback/Feedback'
+import Surveys from './pages/Feedback/Surveys';
+import Tickets from './pages/Feedback/Tickets';
+import AddFeedback from './pages/Feedback/AddFeedback';
+import AddSurvey from './pages/Feedback/AddSurvey';
+import AddTicket from './pages/Feedback/AddTicket';
+import UpdateTicket from "./pages/Feedback/UpdateTicket";
+import FAQPage from './pages/Feedback/FAQ';
 
 // Assuming RedirectHandler is properly defined in './RedirectHandler'
 import RedirectHandler from "./RedirectHandler";
@@ -329,7 +330,7 @@ function App() {
                 <Route path={"/userHome"} element={<UserHome />} />
                 <Route path={"/chatbot"} element={<Chatbot />} />
 
-                <Route path={"/"} element={<Home />} />
+                
                 <Route path={"/feedback"} element={<Feedback />} />
                 <Route path={"/surveys"} element={<Surveys />} />
                 <Route path={"/ticket"} element={<Tickets />} />
@@ -337,6 +338,7 @@ function App() {
                 <Route path={"/FAQ"} element={<FAQPage />} />
                 <Route path={"/surveyForm"} element={<AddSurvey />} />
                 <Route path={"/ticketForm"} element={<AddTicket />} />
+                <Route path={"/updateTicket"} element={<UpdateTicket />} />
               </Routes>
               <Chatbot />
             </Container>

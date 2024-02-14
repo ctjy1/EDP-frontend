@@ -64,11 +64,11 @@ function AddFeedback() {
             <Typography variant="h2" sx={{ my: 3, borderBottom: "3px solid orange", paddingBottom: "7px", color: 'red' }}>
                 <strong>Feedback Form</strong>
             </Typography>
-            <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ my: 2, textAlign: 'center', color: 'black'}}>
                 <b>Give us your feedback!</b>
             </Typography>
 
-            <div style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto', color: 'black'}}>
                 <h2>Contact Information</h2>
                 <h3>Address</h3>
 
@@ -92,7 +92,7 @@ function AddFeedback() {
                 <Box component="form" onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <FormControl fullWidth sx={{ mb: 2 }}>
+                            <FormControl fullWidth sx={{ mb: 2, backgroundColor: "#fdcda9" }}>
                                 <InputLabel htmlFor="feedback_Type">What can we help you with?</InputLabel>
                                 <Select
                                     label="Feedback Type"
@@ -109,7 +109,7 @@ function AddFeedback() {
                                 </Select>
                             </FormControl>
 
-                            <FormControl fullWidth sx={{ mb: 2 }}>
+                            <FormControl fullWidth sx={{ mb: 2, backgroundColor: "#fdcda9" }}>
                                 <TextField
                                     fullWidth
                                     margin="dense"
@@ -124,7 +124,7 @@ function AddFeedback() {
                                 />
                             </FormControl>
 
-                            <FormControl fullWidth sx={{ mb: 2 }}>
+                            <FormControl fullWidth sx={{ mb: 2, backgroundColor: "#fdcda9" }}>
                                 <TextField
                                     fullWidth
                                     margin="dense"
